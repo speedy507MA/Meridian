@@ -126,7 +126,6 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
         'body': loginXMLPayload
     });
     const loginXMLData = new DOMParser().parseFromString(await loginXMLResponse.text(), 'application/xml');
-    const serviceTicket = loginXMLData.querySelector('serviceTicket').textContent
 
     console.log(loginXMLData);
 });
