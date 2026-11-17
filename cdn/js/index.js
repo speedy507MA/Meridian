@@ -110,5 +110,5 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
         password: { cdata: pword }
     }));
 
-    console.log(new XMLSerializer().serializeToString(doc));
+    console.log(new XMLSerializer().serializeToString(doc).replace(/ xmlns=""/g, '').replace(/\n/g, ''));
 });
