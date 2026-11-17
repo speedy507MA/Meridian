@@ -92,9 +92,8 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
     const uname = e.target.querySelector('#ci-username').value;
     const pword = e.target.querySelector('#ci-password').value;
     const doc = soapSchema.structXML(true);
-    console.log(doc);
-    const header = doc.querySelector('soap:Header');
-    const body = doc.querySelector('soap:Body');
+    const header = doc.getElementsByTagNameNS(soapSchema.NAMESPACES.SOAP, 'Header')[0];
+    const body = doc.getElementsByTagNameNS(soapSchema.NAMESPACES.SOAP, 'Body')[0];
     header.innerHTML = `
         <wsse:Security soap:mustUnderstand="0" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
             <wsse:UsernameToken>
