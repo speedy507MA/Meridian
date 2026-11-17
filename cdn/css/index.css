@@ -237,3 +237,8 @@ body {
         display: initial;
     }
 }
+
+#errorBox {
+    display: none;
+    color: red;
+}
