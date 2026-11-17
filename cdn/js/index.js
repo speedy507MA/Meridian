@@ -116,7 +116,7 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
     const loginXMLPayload = new XMLSerializer().serializeToString(doc).replaceAll(/ xmlns=""/g, '').replaceAll(/\n/g, '').replaceAll(/\t/g, '');
     const loginXMLResponse = await fetch(rootUrl, {
         'headers': {
-            'SOAPAction': 'url:loginToPublicPortal',
+            'SOAPAction': 'urn:loginToPublicPortal',
             'stamp-of-time': formatLocalDateTime(),
             'Accept': '*/*',
             'Accept-Language': 'en-US, en;q=0.9',
@@ -126,5 +126,7 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
         'body': loginXMLPayload
     });
     const loginXMLData = new DOMParser().parseFromString(await loginXMLResponse.text(), 'application/xml');
+    const serviceTicket = loginXMLData.querySelector('serviceTicket').textContent
+
     console.log(loginXMLData);
 });
