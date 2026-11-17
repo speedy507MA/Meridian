@@ -89,6 +89,9 @@ function generateCNonce() {
 
 document.querySelector('#totpValidate').addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    document.getElementById('process-notif').style.display = 'block';
+
     const uname = e.target.querySelector('#ci-username').value;
     const pword = e.target.querySelector('#ci-password').value;
     const doc = soapSchema.structXML(true);
@@ -110,5 +113,5 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
         password: { cdata: pword }
     }));
 
-    console.log(new XMLSerializer().serializeToString(doc).replace(/ xmlns=""/g, '').replace(/\n/g, ''));
+    console.log(new XMLSerializer().serializeToString(doc).replaceAll(/ xmlns=""/g, '').replaceAll(/\n/g, '').replaceAll(/\t/g, ''));
 });

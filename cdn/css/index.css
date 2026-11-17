@@ -9,6 +9,16 @@
     --meridian-text-background-fallback: light-dark(#D9F4EE, #102D3A);
 }
 
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 body {
     background-color: var(--body-background_color);
     color: var(--body-text_color);
@@ -70,6 +80,7 @@ body {
 .tvif {
     display: flex;
     justify-content: center;
+    width: 100%;
 }
 
 .tvInputField {
@@ -137,15 +148,24 @@ body {
     color: transparent;
 }
 
+#ci-username {
+    margin-right: 0.5vh;
+}
+
+#ci-password {
+    margin-left: 0.5vh;
+}
+
 .credential-input {
-    justify-content: center;
-    align-content: center;
+    display: flex;
     margin-top: 3vh;
+    width: 100%;
 }
 
 .ci-input {
     padding: 2vh 3vw 2vh 3vw;
     font-size: 100%;
+    width: 100%;
     border: 1px solid gray;
     border-radius: 0.5em;
     background-color: var(--submit-color);
@@ -163,7 +183,6 @@ body {
     width: 100%;
     position: fixed;
     backdrop-filter: blur(1.5rem);
-    display: flex;
     justify-content: center;
     align-content: center;
     display: none;
@@ -185,4 +204,36 @@ body {
 
 .fn-in button {
     margin-top: 1vh;
+}
+
+.spin {
+    animation: spin 1s infinite linear;
+}
+
+.loadWheel {
+    height: 5vh;
+    width: 5vh;
+    margin-top: 1vh;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+@media (prefers-color-scheme: light) {
+    .whiteOnly {
+        display: initial;
+    }
+
+    .blackOnly {
+        display: none;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .whiteOnly {
+        display: none;
+    }
+
+    .blackOnly {
+        display: initial;
+    }
 }
