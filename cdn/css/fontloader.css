@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'Arimo';
+    src: url('../assets/fonts/Arimo/Arimo-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+.Arimo {
+    font-family: 'Arimo', sans-serif;
+}
+
+@font-face {
+    font-family: 'Noto';
+    src: url('../assets/fonts/Noto_Sans/NotoSans-VariableFont_wdth\,wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+.Noto {
+    font-family: 'Noto', sans-serif;
+}

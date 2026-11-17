@@ -1,0 +1,1419 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://publicportal.rest.powerschool.pearson.com/xsd" xmlns:ax2108="http://vo.rest.powerschool.pearson.com/xsd" xmlns:ax2109="http://util.java/xsd" xmlns:tns="http://publicportal.rest.powerschool.pearson.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:ax2111="http://model.rest.powerschool.pearson.com/xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" targetNamespace="http://publicportal.rest.powerschool.pearson.com/">
+    <wsdl:documentation>
+            P/S Public Portal Services JSON
+        </wsdl:documentation>
+    <wsdl:types>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="unqualified" targetNamespace="http://util.java/xsd">
+            <xs:complexType name="Locale">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="ISO3Country" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="ISO3Language" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="country" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="displayCountry" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="displayLanguage" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="displayName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="displayScript" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="displayVariant" nillable="true" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="extensionKeys" nillable="true" type="xs:anyType"/>
+                    <xs:element minOccurs="0" name="language" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="script" nillable="true" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="unicodeLocaleAttributes" nillable="true" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="unicodeLocaleKeys" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="variant" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:ax2113="http://vo.rest.powerschool.pearson.com/xsd" attributeFormDefault="qualified" elementFormDefault="unqualified" targetNamespace="http://publicportal.rest.powerschool.pearson.com/xsd">
+            <xs:import namespace="http://vo.rest.powerschool.pearson.com/xsd"/>
+            <xs:element name="validateServiceToken">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax2113:UserSessionVO"/>
+                        <xs:element minOccurs="0" name="redirectURL" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="validateServiceTokenResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax2113:RedirectURLResultVO"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="storeNotificationSettings">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax2113:UserSessionVO"/>
+                        <xs:element minOccurs="0" name="ns" nillable="true" type="ax2113:NotificationSettingsVO"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="storeNotificationSettingsResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax2113:ResultsVO"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="sendPasswordRecoveryEmail">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="userType" type="xs:int"/>
+                        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="emailAddress" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="sendPasswordRecoveryEmailResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax2113:MessageVO"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="recoverUsername">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="emailAddress" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="recoverUsernameResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax2113:MessageVO"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="recoverPassword">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="userType" type="xs:int"/>
+                        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="recoveryToken" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="newPassword" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="recoverPasswordResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax2113:PasswordResetVO"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="logoutAndDelinkDeviceToken">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax2113:UserSessionVO"/>
+                        <xs:element minOccurs="0" name="deviceToken" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="logoutAndDelinkDeviceTokenResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax2113:ResultsVO"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="logout">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax2113:UserSessionVO"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="logoutResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax2113:ResultsVO"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="loginToPublicPortal">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="loginToPublicPortalResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax2113:ResultsVO"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="login">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string"/>
+                        <xs:element minOccurs="0" name="password" nillable="true" type="xs:string"/>
+                        <xs:element name="userType" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="loginResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax2113:ResultsVO"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="linkDeviceTokenToUser">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax2113:UserSessionVO"/>
+                        <xs:element minOccurs="0" name="deviceToken" nillable="true" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="linkDeviceTokenToUserResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax2113:MessageVO"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getStudentPhoto">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax2113:UserSessionVO"/>
+                        <xs:element name="studentID" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getStudentPhotoResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:base64Binary"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getStudentData">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax2113:UserSessionVO"/>
+                        <xs:element maxOccurs="unbounded" name="studentIDs" type="xs:long"/>
+                        <xs:element minOccurs="0" name="qil" nillable="true" type="ax2113:QueryIncludeListVO"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getStudentDataResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax2113:ResultsVO"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getStartStopTimeForAllSections">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax2113:UserSessionVO"/>
+                        <xs:element maxOccurs="unbounded" name="studentIDs" type="xs:long"/>
+                        <xs:element name="month" type="xs:int"/>
+                        <xs:element name="year" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getStartStopTimeForAllSectionsResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax2113:ResultsVO"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getSchoolMapBySchoolNumber">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax2113:UserSessionVO"/>
+                        <xs:element name="schoolNumber" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getSchoolMapBySchoolNumberResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="xs:base64Binary"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getCredentialComplexityRules">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="userType" type="xs:int"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getCredentialComplexityRulesResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="return" nillable="true" type="ax2113:CredentialComplexityRulesVO"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns:ax2110="http://util.java/xsd" xmlns:ax2112="http://model.rest.powerschool.pearson.com/xsd" attributeFormDefault="qualified" elementFormDefault="unqualified" targetNamespace="http://vo.rest.powerschool.pearson.com/xsd">
+            <xs:import namespace="http://util.java/xsd"/>
+            <xs:import namespace="http://util.java/xsd"/>
+            <xs:import namespace="http://model.rest.powerschool.pearson.com/xsd"/>
+            <xs:import namespace="http://model.rest.powerschool.pearson.com/xsd"/>
+            <xs:complexType name="UserSessionVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="locale" nillable="true" type="ax2109:Locale"/>
+                    <xs:element minOccurs="0" name="serverCurrentTime" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="serverInfo" nillable="true" type="ax2111:ServerInfo"/>
+                    <xs:element minOccurs="0" name="serviceTicket" nillable="true" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="studentIDs" nillable="true" type="xs:long"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="ucProfileURIs" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="ucToken" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="userId" type="xs:long"/>
+                    <xs:element minOccurs="0" name="userType" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType abstract="true" name="BaseResultsVO">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="messageVOs" nillable="true" type="ax2108:MessageVO"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="MessageVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="id" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="msgCode" type="xs:int"/>
+                    <xs:element minOccurs="0" name="title" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="RedirectURLResultVO">
+                <xs:complexContent>
+                    <xs:extension base="ax2108:BaseResultsVO">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="redirectURL" nillable="true" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="NotificationSettingsVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="applyToAllStudents" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="balanceAlerts" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="detailedAssignments" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="detailedAttendance" type="xs:boolean"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="emailAddresses" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="frequency" type="xs:int"/>
+                    <xs:element minOccurs="0" name="gradeAndAttSummary" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="guardianStudentId" type="xs:long"/>
+                    <xs:element minOccurs="0" name="mainEmail" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="schoolAnnouncements" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="sendNow" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ResultsVO">
+                <xs:complexContent>
+                    <xs:extension base="ax2108:BaseResultsVO">
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" name="studentDataVOs" nillable="true" type="ax2108:StudentDataVO"/>
+                            <xs:element minOccurs="0" name="userSessionVO" nillable="true" type="ax2108:UserSessionVO"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="StudentDataVO">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="activities" nillable="true" type="ax2108:ActivityVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="archivedFinalGrades" nillable="true" type="ax2108:ArchivedFinalGradeVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="assignmentCategories" nillable="true" type="ax2108:AsmtCatVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="assignmentScores" nillable="true" type="ax2108:AssignmentScoreVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="assignments" nillable="true" type="ax2108:AssignmentVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="attendance" nillable="true" type="ax2108:AttendanceVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="attendanceCodes" nillable="true" type="ax2108:AttendanceCodeVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="bulletins" nillable="true" type="ax2111:BulletinLite"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="citizenCodes" nillable="true" type="ax2108:CitizenCodeVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="citizenGrades" nillable="true" type="ax2108:CitizenGradeVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="customPage" nillable="true" type="ax2108:CustomPageVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="enrollments" nillable="true" type="ax2108:SectionEnrollmentVO"/>
+                    <xs:element minOccurs="0" name="extension" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="feeBalance" nillable="true" type="ax2108:FeeBalanceVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="feeTransactions" nillable="true" type="ax2108:FeeTransactionVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="feeTypes" nillable="true" type="ax2108:FeeTypeVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="finalGrades" nillable="true" type="ax2108:FinalGradeVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="gradeScales" nillable="true" type="ax2108:GradeScaleVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="lunchTransactions" nillable="true" type="ax2108:LunchTransactionVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="notInSessionDays" nillable="true" type="ax2108:NotInSessionDayVO"/>
+                    <xs:element minOccurs="0" name="notificationSettingsVO" nillable="true" type="ax2108:NotificationSettingsVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="periods" nillable="true" type="ax2108:PeriodVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="remoteSchools" nillable="true" type="ax2108:SchoolVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="reportingTerms" nillable="true" type="ax2108:ReportingTermVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="schools" nillable="true" type="ax2108:SchoolVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="sections" nillable="true" type="ax2108:SectionVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="standards" nillable="true" type="ax2108:StandardVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="standardsGrades" nillable="true" type="ax2108:StandardGradeVO"/>
+                    <xs:element minOccurs="0" name="student" nillable="true" type="ax2108:StudentVO"/>
+                    <xs:element minOccurs="0" name="studentDcid" type="xs:long"/>
+                    <xs:element minOccurs="0" name="studentId" type="xs:long"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="teachers" nillable="true" type="ax2108:TeacherVO"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="terms" nillable="true" type="ax2108:TermVO"/>
+                    <xs:element minOccurs="0" name="yearId" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ActivityVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="category" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="required" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="FinalGradeVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="commentValue" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="dateStored" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="grade" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="percent" type="xs:double"/>
+                    <xs:element minOccurs="0" name="reportingTermId" type="xs:long"/>
+                    <xs:element minOccurs="0" name="sectionid" type="xs:long"/>
+                    <xs:element minOccurs="0" name="storeType" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ArchivedFinalGradeVO">
+                <xs:complexContent>
+                    <xs:extension base="ax2108:FinalGradeVO">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="courseName" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="courseNumber" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="schoolId" type="xs:long"/>
+                            <xs:element minOccurs="0" name="sortOrder" type="xs:int"/>
+                            <xs:element minOccurs="0" name="storeCode" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="teacherName" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="termEndDate" nillable="true" type="xs:dateTime"/>
+                            <xs:element minOccurs="0" name="termId" type="xs:long"/>
+                            <xs:element minOccurs="0" name="termStartDate" nillable="true" type="xs:dateTime"/>
+                            <xs:element minOccurs="0" name="yearId" type="xs:int"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="AsmtCatVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="abbreviation" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="gradeBookType" type="xs:int"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="AssignmentScoreVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="assignmentId" type="xs:long"/>
+                    <xs:element minOccurs="0" name="collected" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="comment" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="exempt" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="gradeBookType" type="xs:int"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="incomplete" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="late" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="letterGrade" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="missing" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="percent" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="score" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="scoretype" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="AssignmentVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="abbreviation" nillable="true" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="additionalCategoryIds" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="assignmentid" type="xs:long"/>
+                    <xs:element minOccurs="0" name="categoryId" type="xs:long"/>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="dueDate" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="gradeBookType" type="xs:int"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="includeinfinalgrades" type="xs:int"/>
+                    <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="pointspossible" type="xs:double"/>
+                    <xs:element minOccurs="0" name="publishDaysBeforeDue" type="xs:int"/>
+                    <xs:element minOccurs="0" name="publishState" type="xs:int"/>
+                    <xs:element minOccurs="0" name="publishonspecificdate" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="publishscores" type="xs:int"/>
+                    <xs:element minOccurs="0" name="sectionDcid" type="xs:long"/>
+                    <xs:element minOccurs="0" name="sectionid" type="xs:long"/>
+                    <xs:element minOccurs="0" name="type" type="xs:int"/>
+                    <xs:element minOccurs="0" name="weight" type="xs:double"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="AttendanceVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="adaValueCode" type="xs:double"/>
+                    <xs:element minOccurs="0" name="adaValueTime" type="xs:double"/>
+                    <xs:element minOccurs="0" name="admValue" type="xs:double"/>
+                    <xs:element minOccurs="0" name="attCodeid" type="xs:long"/>
+                    <xs:element minOccurs="0" name="attComment" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="attDate" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="attFlags" type="xs:int"/>
+                    <xs:element minOccurs="0" name="attInterval" type="xs:int"/>
+                    <xs:element minOccurs="0" name="attModeCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="ccid" type="xs:long"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="periodid" type="xs:long"/>
+                    <xs:element minOccurs="0" name="schoolid" type="xs:long"/>
+                    <xs:element minOccurs="0" name="studentid" type="xs:long"/>
+                    <xs:element minOccurs="0" name="totalMinutes" type="xs:double"/>
+                    <xs:element minOccurs="0" name="transactionType" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="yearid" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="AttendanceCodeVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="attCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="codeType" nillable="true" type="xs:int"/>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="schoolid" type="xs:long"/>
+                    <xs:element minOccurs="0" name="sortorder" nillable="true" type="xs:int"/>
+                    <xs:element minOccurs="0" name="yearid" nillable="true" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CitizenCodeVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="codeName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="sortOrder" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CitizenGradeVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="codeId" type="xs:long"/>
+                    <xs:element minOccurs="0" name="reportingTermId" type="xs:long"/>
+                    <xs:element minOccurs="0" name="sectionId" type="xs:long"/>
+                    <xs:element minOccurs="0" name="storeType" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CustomPageVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="formIcon" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="formTitle" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="redirectURL" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="SectionEnrollmentVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="endDate" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="enrollStatus" type="xs:int"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="startDate" nillable="true" type="xs:dateTime"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="FeeBalanceVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="balance" type="xs:double"/>
+                    <xs:element minOccurs="0" name="credit" type="xs:double"/>
+                    <xs:element minOccurs="0" name="debit" type="xs:double"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="schoolid" type="xs:long"/>
+                    <xs:element minOccurs="0" name="yearid" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="FeeTransactionVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="adjustment" nillable="true" type="xs:double"/>
+                    <xs:element minOccurs="0" name="courseName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="courseNumber" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="creationdate" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="dateValue" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="departmentName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="feeAmount" nillable="true" type="xs:double"/>
+                    <xs:element minOccurs="0" name="feeBalance" nillable="true" type="xs:double"/>
+                    <xs:element minOccurs="0" name="feeCategoryName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="feePaid" nillable="true" type="xs:double"/>
+                    <xs:element minOccurs="0" name="feeTypeId" type="xs:long"/>
+                    <xs:element minOccurs="0" name="feeTypeName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="feecharged" nillable="true" type="xs:double"/>
+                    <xs:element minOccurs="0" name="groupTransactionId" type="xs:long"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="modificationdate" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="originalfee" nillable="true" type="xs:double"/>
+                    <xs:element minOccurs="0" name="priority" nillable="true" type="xs:int"/>
+                    <xs:element minOccurs="0" name="proRated" nillable="true" type="xs:int"/>
+                    <xs:element minOccurs="0" name="schoolfeeId" type="xs:long"/>
+                    <xs:element minOccurs="0" name="schoolid" type="xs:long"/>
+                    <xs:element minOccurs="0" name="termid" type="xs:long"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="FeeTypeVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="descript" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="feeCategoryName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="schoolNumber" type="xs:long"/>
+                    <xs:element minOccurs="0" name="sort" type="xs:int"/>
+                    <xs:element minOccurs="0" name="title" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GradeScaleVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="gradeBookType" type="xs:int"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="gradeScaleItems" nillable="true" type="ax2108:GradeScaleItemVO"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="numeric" type="xs:int"/>
+                    <xs:element minOccurs="0" name="numericMax" type="xs:int"/>
+                    <xs:element minOccurs="0" name="numericMin" type="xs:int"/>
+                    <xs:element minOccurs="0" name="numericPrecision" type="xs:int"/>
+                    <xs:element minOccurs="0" name="numericScale" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GradeScaleItemVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="cutoffPercent" nillable="true" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="defaultZeroCutoff" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="gradeBookType" type="xs:int"/>
+                    <xs:element minOccurs="0" name="gradeLabel" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="percentValue" nillable="true" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="pointsValue" nillable="true" type="xs:decimal"/>
+                    <xs:element minOccurs="0" name="sortOrder" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="LunchTransactionVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="cash" nillable="true" type="xs:double"/>
+                    <xs:element minOccurs="0" name="credit" nillable="true" type="xs:double"/>
+                    <xs:element minOccurs="0" name="dateValue" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="debit" nillable="true" type="xs:double"/>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="id" nillable="true" type="xs:long"/>
+                    <xs:element minOccurs="0" name="mealprice" nillable="true" type="xs:double"/>
+                    <xs:element minOccurs="0" name="neteffect" nillable="true" type="xs:double"/>
+                    <xs:element minOccurs="0" name="time" nillable="true" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="NotInSessionDayVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="calType" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="calendarDay" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="schoolNumber" type="xs:long"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="PeriodVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="abbreviation" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="periodNumber" type="xs:int"/>
+                    <xs:element minOccurs="0" name="schoolid" type="xs:long"/>
+                    <xs:element minOccurs="0" name="sortOrder" type="xs:int"/>
+                    <xs:element minOccurs="0" name="yearid" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="SchoolVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="abbreviation" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="address" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="currentTermId" type="xs:long"/>
+                    <xs:element minOccurs="0" name="disabledFeatures" nillable="true" type="ax2108:DisabledFeaturesVO"/>
+                    <xs:element minOccurs="0" name="highGrade" nillable="true" type="xs:int"/>
+                    <xs:element minOccurs="0" name="lowGrade" nillable="true" type="xs:int"/>
+                    <xs:element minOccurs="0" name="mapMimeType" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="schoolDisabled" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="schoolDisabledMessage" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="schoolDisabledTitle" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="schoolId" type="xs:long"/>
+                    <xs:element minOccurs="0" name="schoolMapModifiedDate" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="schoolNumber" type="xs:long"/>
+                    <xs:element minOccurs="0" name="schooladdress" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="schoolcity" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="schoolcountry" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="schoolfax" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="schoolphone" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="schoolstate" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="schoolzip" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="DisabledFeaturesVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="activities" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="assignments" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="attendance" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="citizenship" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="currentGpa" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="emailalerts" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="fees" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="finalGrades" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="meals" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="pushAttendance" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="pushGrade" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="standards" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ReportingTermVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="abbreviation" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="endDate" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="schoolid" type="xs:long"/>
+                    <xs:element minOccurs="0" name="sendingGrades" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="sortOrder" type="xs:int"/>
+                    <xs:element minOccurs="0" name="startDate" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="suppressGrades" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="suppressPercents" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="termid" type="xs:long"/>
+                    <xs:element minOccurs="0" name="title" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="yearid" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="SectionVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="courseCode" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="dcid" type="xs:long"/>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="enrollments" nillable="true" type="ax2108:SectionEnrollmentVO"/>
+                    <xs:element minOccurs="0" name="expression" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="gradeBookType" type="xs:int"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="periodSort" nillable="true" type="xs:int"/>
+                    <xs:element minOccurs="0" name="roomName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="schoolCourseTitle" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="schoolNumber" type="xs:long"/>
+                    <xs:element minOccurs="0" name="sectionNum" nillable="true" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="startStopDates" nillable="true" type="ax2108:StartStopDateVO"/>
+                    <xs:element minOccurs="0" name="teacherID" type="xs:long"/>
+                    <xs:element minOccurs="0" name="termID" type="xs:long"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="StartStopDateVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="sectionEnrollmentId" type="xs:long"/>
+                    <xs:element minOccurs="0" name="start" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="stop" nillable="true" type="xs:dateTime"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="StandardVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="description" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="gradeBookType" type="xs:int"/>
+                    <xs:element minOccurs="0" name="gradeScaleID" type="xs:long"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="identifier" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="parentStandardID" type="xs:long"/>
+                    <xs:element minOccurs="0" name="sortOrder" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="StandardGradeVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="comment" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="commentLastUpdated" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="exempt" type="xs:int"/>
+                    <xs:element minOccurs="0" name="gradeBookType" type="xs:int"/>
+                    <xs:element minOccurs="0" name="gradeEntered" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="gradeLastUpdated" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="gradeType" type="xs:int"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="late" type="xs:int"/>
+                    <xs:element minOccurs="0" name="missing" type="xs:int"/>
+                    <xs:element minOccurs="0" name="reportingTermId" type="xs:long"/>
+                    <xs:element minOccurs="0" name="sectionDcid" type="xs:long"/>
+                    <xs:element minOccurs="0" name="sectionId" type="xs:long"/>
+                    <xs:element minOccurs="0" name="standardId" type="xs:long"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="StudentVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="currentGPA" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="currentMealBalance" type="xs:double"/>
+                    <xs:element minOccurs="0" name="currentTerm" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="dcid" type="xs:long"/>
+                    <xs:element minOccurs="0" name="dob" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="ethnicity" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="firstName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="gender" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="gradeLevel" type="xs:int"/>
+                    <xs:element minOccurs="0" name="guardianAccessDisabled" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="lastName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="middleName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="photoDate" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="startingMealBalance" type="xs:double"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="TeacherVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="email" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="firstName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="lastName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="schoolPhone" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="TermVO">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="abbrev" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="endDate" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="parentTermId" type="xs:long"/>
+                    <xs:element minOccurs="0" name="schoolNumber" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="startDate" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="suppressed" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="title" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="PasswordResetVO">
+                <xs:complexContent>
+                    <xs:extension base="ax2108:BaseResultsVO">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="minPasswordLength" type="xs:int"/>
+                            <xs:element minOccurs="0" name="serviceTicket" nillable="true" type="xs:string"/>
+                            <xs:element minOccurs="0" name="successful" type="xs:boolean"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="QueryIncludeListVO">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="includes" nillable="true" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CredentialComplexityRulesVO">
+                <xs:complexContent>
+                    <xs:extension base="ax2108:BaseResultsVO">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" name="lettersAndNumRequired" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="mixOfCaseRequired" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="requiredCharacterCount" type="xs:int"/>
+                            <xs:element minOccurs="0" name="specialCharacterRequired" type="xs:boolean"/>
+                            <xs:element minOccurs="0" name="successful" type="xs:boolean"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema attributeFormDefault="qualified" elementFormDefault="unqualified" targetNamespace="http://model.rest.powerschool.pearson.com/xsd">
+            <xs:complexType name="ServerInfo">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="apiVersion" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="dayLightSavings" type="xs:int"/>
+                    <xs:element minOccurs="0" name="parentSAMLEndPoint" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="parentSAMLV2EndPoint" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="publicPortalDisabled" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="publicPortalDisabledMessage" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="rawOffset" type="xs:int"/>
+                    <xs:element minOccurs="0" name="serverTime" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="standardTimeZoneName" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="studentSAMLEndPoint" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="studentSAMLV2EndPoint" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="teacherSAMLEndPoint" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="timeZoneName" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="BulletinLite">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="audience" type="xs:long"/>
+                    <xs:element minOccurs="0" name="body" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="endDate" nillable="true" type="xs:date"/>
+                    <xs:element minOccurs="0" name="id" type="xs:long"/>
+                    <xs:element minOccurs="0" name="name" nillable="true" type="xs:string"/>
+                    <xs:element minOccurs="0" name="schoolId" type="xs:long"/>
+                    <xs:element minOccurs="0" name="sortOrder" type="xs:int"/>
+                    <xs:element minOccurs="0" name="startDate" nillable="true" type="xs:date"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="getCredentialComplexityRulesRequest">
+        <wsdl:part name="parameters" element="ns:getCredentialComplexityRules"/>
+    </wsdl:message>
+    <wsdl:message name="getCredentialComplexityRulesResponse">
+        <wsdl:part name="parameters" element="ns:getCredentialComplexityRulesResponse"/>
+    </wsdl:message>
+    <wsdl:message name="validateServiceTokenRequest">
+        <wsdl:part name="parameters" element="ns:validateServiceToken"/>
+    </wsdl:message>
+    <wsdl:message name="validateServiceTokenResponse">
+        <wsdl:part name="parameters" element="ns:validateServiceTokenResponse"/>
+    </wsdl:message>
+    <wsdl:message name="logoutAndDelinkDeviceTokenRequest">
+        <wsdl:part name="parameters" element="ns:logoutAndDelinkDeviceToken"/>
+    </wsdl:message>
+    <wsdl:message name="logoutAndDelinkDeviceTokenResponse">
+        <wsdl:part name="parameters" element="ns:logoutAndDelinkDeviceTokenResponse"/>
+    </wsdl:message>
+    <wsdl:message name="loginRequest">
+        <wsdl:part name="parameters" element="ns:login"/>
+    </wsdl:message>
+    <wsdl:message name="loginResponse">
+        <wsdl:part name="parameters" element="ns:loginResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getStudentDataRequest">
+        <wsdl:part name="parameters" element="ns:getStudentData"/>
+    </wsdl:message>
+    <wsdl:message name="getStudentDataResponse">
+        <wsdl:part name="parameters" element="ns:getStudentDataResponse"/>
+    </wsdl:message>
+    <wsdl:message name="sendPasswordRecoveryEmailRequest">
+        <wsdl:part name="parameters" element="ns:sendPasswordRecoveryEmail"/>
+    </wsdl:message>
+    <wsdl:message name="sendPasswordRecoveryEmailResponse">
+        <wsdl:part name="parameters" element="ns:sendPasswordRecoveryEmailResponse"/>
+    </wsdl:message>
+    <wsdl:message name="logoutRequest">
+        <wsdl:part name="parameters" element="ns:logout"/>
+    </wsdl:message>
+    <wsdl:message name="logoutResponse">
+        <wsdl:part name="parameters" element="ns:logoutResponse"/>
+    </wsdl:message>
+    <wsdl:message name="loginToPublicPortalRequest">
+        <wsdl:part name="parameters" element="ns:loginToPublicPortal"/>
+    </wsdl:message>
+    <wsdl:message name="loginToPublicPortalResponse">
+        <wsdl:part name="parameters" element="ns:loginToPublicPortalResponse"/>
+    </wsdl:message>
+    <wsdl:message name="recoverUsernameRequest">
+        <wsdl:part name="parameters" element="ns:recoverUsername"/>
+    </wsdl:message>
+    <wsdl:message name="recoverUsernameResponse">
+        <wsdl:part name="parameters" element="ns:recoverUsernameResponse"/>
+    </wsdl:message>
+    <wsdl:message name="linkDeviceTokenToUserRequest">
+        <wsdl:part name="parameters" element="ns:linkDeviceTokenToUser"/>
+    </wsdl:message>
+    <wsdl:message name="linkDeviceTokenToUserResponse">
+        <wsdl:part name="parameters" element="ns:linkDeviceTokenToUserResponse"/>
+    </wsdl:message>
+    <wsdl:message name="recoverPasswordRequest">
+        <wsdl:part name="parameters" element="ns:recoverPassword"/>
+    </wsdl:message>
+    <wsdl:message name="recoverPasswordResponse">
+        <wsdl:part name="parameters" element="ns:recoverPasswordResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getStudentPhotoRequest">
+        <wsdl:part name="parameters" element="ns:getStudentPhoto"/>
+    </wsdl:message>
+    <wsdl:message name="getStudentPhotoResponse">
+        <wsdl:part name="parameters" element="ns:getStudentPhotoResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getSchoolMapBySchoolNumberRequest">
+        <wsdl:part name="parameters" element="ns:getSchoolMapBySchoolNumber"/>
+    </wsdl:message>
+    <wsdl:message name="getSchoolMapBySchoolNumberResponse">
+        <wsdl:part name="parameters" element="ns:getSchoolMapBySchoolNumberResponse"/>
+    </wsdl:message>
+    <wsdl:message name="storeNotificationSettingsRequest">
+        <wsdl:part name="parameters" element="ns:storeNotificationSettings"/>
+    </wsdl:message>
+    <wsdl:message name="storeNotificationSettingsResponse">
+        <wsdl:part name="parameters" element="ns:storeNotificationSettingsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getStartStopTimeForAllSectionsRequest">
+        <wsdl:part name="parameters" element="ns:getStartStopTimeForAllSections"/>
+    </wsdl:message>
+    <wsdl:message name="getStartStopTimeForAllSectionsResponse">
+        <wsdl:part name="parameters" element="ns:getStartStopTimeForAllSectionsResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="PublicPortalServiceJSONPortType">
+        <wsdl:operation name="getCredentialComplexityRules">
+            <wsdl:input message="tns:getCredentialComplexityRulesRequest" wsaw:Action="urn:getCredentialComplexityRules"/>
+            <wsdl:output message="tns:getCredentialComplexityRulesResponse" wsaw:Action="urn:getCredentialComplexityRulesResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="validateServiceToken">
+            <wsdl:input message="tns:validateServiceTokenRequest" wsaw:Action="urn:validateServiceToken"/>
+            <wsdl:output message="tns:validateServiceTokenResponse" wsaw:Action="urn:validateServiceTokenResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="logoutAndDelinkDeviceToken">
+            <wsdl:input message="tns:logoutAndDelinkDeviceTokenRequest" wsaw:Action="urn:logoutAndDelinkDeviceToken"/>
+            <wsdl:output message="tns:logoutAndDelinkDeviceTokenResponse" wsaw:Action="urn:logoutAndDelinkDeviceTokenResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="login">
+            <wsdl:input message="tns:loginRequest" wsaw:Action="urn:login"/>
+            <wsdl:output message="tns:loginResponse" wsaw:Action="urn:loginResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getStudentData">
+            <wsdl:input message="tns:getStudentDataRequest" wsaw:Action="urn:getStudentData"/>
+            <wsdl:output message="tns:getStudentDataResponse" wsaw:Action="urn:getStudentDataResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="sendPasswordRecoveryEmail">
+            <wsdl:input message="tns:sendPasswordRecoveryEmailRequest" wsaw:Action="urn:sendPasswordRecoveryEmail"/>
+            <wsdl:output message="tns:sendPasswordRecoveryEmailResponse" wsaw:Action="urn:sendPasswordRecoveryEmailResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="logout">
+            <wsdl:input message="tns:logoutRequest" wsaw:Action="urn:logout"/>
+            <wsdl:output message="tns:logoutResponse" wsaw:Action="urn:logoutResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="loginToPublicPortal">
+            <wsdl:input message="tns:loginToPublicPortalRequest" wsaw:Action="urn:loginToPublicPortal"/>
+            <wsdl:output message="tns:loginToPublicPortalResponse" wsaw:Action="urn:loginToPublicPortalResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="recoverUsername">
+            <wsdl:input message="tns:recoverUsernameRequest" wsaw:Action="urn:recoverUsername"/>
+            <wsdl:output message="tns:recoverUsernameResponse" wsaw:Action="urn:recoverUsernameResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="linkDeviceTokenToUser">
+            <wsdl:input message="tns:linkDeviceTokenToUserRequest" wsaw:Action="urn:linkDeviceTokenToUser"/>
+            <wsdl:output message="tns:linkDeviceTokenToUserResponse" wsaw:Action="urn:linkDeviceTokenToUserResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="recoverPassword">
+            <wsdl:input message="tns:recoverPasswordRequest" wsaw:Action="urn:recoverPassword"/>
+            <wsdl:output message="tns:recoverPasswordResponse" wsaw:Action="urn:recoverPasswordResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getStudentPhoto">
+            <wsdl:input message="tns:getStudentPhotoRequest" wsaw:Action="urn:getStudentPhoto"/>
+            <wsdl:output message="tns:getStudentPhotoResponse" wsaw:Action="urn:getStudentPhotoResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getSchoolMapBySchoolNumber">
+            <wsdl:input message="tns:getSchoolMapBySchoolNumberRequest" wsaw:Action="urn:getSchoolMapBySchoolNumber"/>
+            <wsdl:output message="tns:getSchoolMapBySchoolNumberResponse" wsaw:Action="urn:getSchoolMapBySchoolNumberResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="storeNotificationSettings">
+            <wsdl:input message="tns:storeNotificationSettingsRequest" wsaw:Action="urn:storeNotificationSettings"/>
+            <wsdl:output message="tns:storeNotificationSettingsResponse" wsaw:Action="urn:storeNotificationSettingsResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getStartStopTimeForAllSections">
+            <wsdl:input message="tns:getStartStopTimeForAllSectionsRequest" wsaw:Action="urn:getStartStopTimeForAllSections"/>
+            <wsdl:output message="tns:getStartStopTimeForAllSectionsResponse" wsaw:Action="urn:getStartStopTimeForAllSectionsResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PublicPortalServiceJSONSoap11Binding" type="tns:PublicPortalServiceJSONPortType">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="getCredentialComplexityRules">
+            <soap:operation soapAction="urn:getCredentialComplexityRules" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="validateServiceToken">
+            <soap:operation soapAction="urn:validateServiceToken" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="logoutAndDelinkDeviceToken">
+            <soap:operation soapAction="urn:logoutAndDelinkDeviceToken" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="login">
+            <soap:operation soapAction="urn:login" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getStudentData">
+            <soap:operation soapAction="urn:getStudentData" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="sendPasswordRecoveryEmail">
+            <soap:operation soapAction="urn:sendPasswordRecoveryEmail" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="logout">
+            <soap:operation soapAction="urn:logout" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="loginToPublicPortal">
+            <soap:operation soapAction="urn:loginToPublicPortal" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="recoverUsername">
+            <soap:operation soapAction="urn:recoverUsername" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="linkDeviceTokenToUser">
+            <soap:operation soapAction="urn:linkDeviceTokenToUser" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="recoverPassword">
+            <soap:operation soapAction="urn:recoverPassword" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getStudentPhoto">
+            <soap:operation soapAction="urn:getStudentPhoto" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getSchoolMapBySchoolNumber">
+            <soap:operation soapAction="urn:getSchoolMapBySchoolNumber" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="storeNotificationSettings">
+            <soap:operation soapAction="urn:storeNotificationSettings" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getStartStopTimeForAllSections">
+            <soap:operation soapAction="urn:getStartStopTimeForAllSections" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="PublicPortalServiceJSONSoap12Binding" type="tns:PublicPortalServiceJSONPortType">
+        <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="getCredentialComplexityRules">
+            <soap12:operation soapAction="urn:getCredentialComplexityRules" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="validateServiceToken">
+            <soap12:operation soapAction="urn:validateServiceToken" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="logoutAndDelinkDeviceToken">
+            <soap12:operation soapAction="urn:logoutAndDelinkDeviceToken" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="login">
+            <soap12:operation soapAction="urn:login" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getStudentData">
+            <soap12:operation soapAction="urn:getStudentData" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="sendPasswordRecoveryEmail">
+            <soap12:operation soapAction="urn:sendPasswordRecoveryEmail" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="logout">
+            <soap12:operation soapAction="urn:logout" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="loginToPublicPortal">
+            <soap12:operation soapAction="urn:loginToPublicPortal" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="recoverUsername">
+            <soap12:operation soapAction="urn:recoverUsername" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="linkDeviceTokenToUser">
+            <soap12:operation soapAction="urn:linkDeviceTokenToUser" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="recoverPassword">
+            <soap12:operation soapAction="urn:recoverPassword" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getStudentPhoto">
+            <soap12:operation soapAction="urn:getStudentPhoto" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getSchoolMapBySchoolNumber">
+            <soap12:operation soapAction="urn:getSchoolMapBySchoolNumber" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="storeNotificationSettings">
+            <soap12:operation soapAction="urn:storeNotificationSettings" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getStartStopTimeForAllSections">
+            <soap12:operation soapAction="urn:getStartStopTimeForAllSections" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="PublicPortalServiceJSONHttpBinding" type="tns:PublicPortalServiceJSONPortType">
+        <http:binding verb="POST"/>
+        <wsdl:operation name="getCredentialComplexityRules">
+            <http:operation location="getCredentialComplexityRules"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="validateServiceToken">
+            <http:operation location="validateServiceToken"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="logoutAndDelinkDeviceToken">
+            <http:operation location="logoutAndDelinkDeviceToken"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="login">
+            <http:operation location="login"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getStudentData">
+            <http:operation location="getStudentData"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="sendPasswordRecoveryEmail">
+            <http:operation location="sendPasswordRecoveryEmail"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="logout">
+            <http:operation location="logout"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="loginToPublicPortal">
+            <http:operation location="loginToPublicPortal"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="recoverUsername">
+            <http:operation location="recoverUsername"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="linkDeviceTokenToUser">
+            <http:operation location="linkDeviceTokenToUser"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="recoverPassword">
+            <http:operation location="recoverPassword"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getStudentPhoto">
+            <http:operation location="getStudentPhoto"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getSchoolMapBySchoolNumber">
+            <http:operation location="getSchoolMapBySchoolNumber"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="storeNotificationSettings">
+            <http:operation location="storeNotificationSettings"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getStartStopTimeForAllSections">
+            <http:operation location="getStartStopTimeForAllSections"/>
+            <wsdl:input>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:input>
+            <wsdl:output>
+                <mime:content type="application/xml" part="parameters"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="PublicPortalServiceJSON">
+        <wsdl:port name="PublicPortalServiceJSONHttpsSoap11Endpoint" binding="tns:PublicPortalServiceJSONSoap11Binding">
+            <soap:address location="https://ps.westboroughk12.org:8443/pearson-rest/services/PublicPortalServiceJSON.PublicPortalServiceJSONHttpsSoap11Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="PublicPortalServiceJSONHttpSoap11Endpoint" binding="tns:PublicPortalServiceJSONSoap11Binding">
+            <soap:address location="http://ps.westboroughk12.org:8080/pearson-rest/services/PublicPortalServiceJSON.PublicPortalServiceJSONHttpSoap11Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="PublicPortalServiceJSONHttpSoap12Endpoint" binding="tns:PublicPortalServiceJSONSoap12Binding">
+            <soap12:address location="http://ps.westboroughk12.org:8080/pearson-rest/services/PublicPortalServiceJSON.PublicPortalServiceJSONHttpSoap12Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="PublicPortalServiceJSONHttpsSoap12Endpoint" binding="tns:PublicPortalServiceJSONSoap12Binding">
+            <soap12:address location="https://ps.westboroughk12.org:8443/pearson-rest/services/PublicPortalServiceJSON.PublicPortalServiceJSONHttpsSoap12Endpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="PublicPortalServiceJSONHttpsEndpoint" binding="tns:PublicPortalServiceJSONHttpBinding">
+            <http:address location="https://ps.westboroughk12.org:8443/pearson-rest/services/PublicPortalServiceJSON.PublicPortalServiceJSONHttpsEndpoint/"/>
+        </wsdl:port>
+        <wsdl:port name="PublicPortalServiceJSONHttpEndpoint" binding="tns:PublicPortalServiceJSONHttpBinding">
+            <http:address location="http://ps.westboroughk12.org:8080/pearson-rest/services/PublicPortalServiceJSON.PublicPortalServiceJSONHttpEndpoint/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
