@@ -125,6 +125,6 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
         'method': 'POST',
         'body': loginXMLPayload
     });
-    const loginXMLData = new DOMParser().parseFromString(await loginXMLPayload.text(), 'application/xml');
+    const loginXMLData = new DOMParser().parseFromString(await loginXMLResponse.text(), 'application/xml');
     console.log(loginXMLData);
 });
