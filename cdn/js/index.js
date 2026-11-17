@@ -94,14 +94,17 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
     const doc = soapSchema.structXML(true);
     const header = doc.getElementsByTagNameNS(soapSchema.NAMESPACES.SOAP, 'Header')[0];
     const body = doc.getElementsByTagNameNS(soapSchema.NAMESPACES.SOAP, 'Body')[0];
-    header.innerHTML = `
-        <wsse:Security soap:mustUnderstand="0" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
-            <wsse:UsernameToken>
-                <wsse:Username>pearson</wsse:Username>
-                <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">AAAAAAAAAAAAAAAAAAAAAAAAAAA=</wsse:Password>
-            </wsse:UsernameToken>
-        </wsse:Security>
-    `;
+    const securityXml = `
+    <wsse:Security soap:mustUnderstand="0"
+        xmlns:soap="${soapSchema.NAMESPACES.SOAP}"
+        xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+        <wsse:UsernameToken>
+            <wsse:Username>pearson</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">AAAAAAAAAAAAAAAAAAAAAAAAAAA=</wsse:Password>
+        </wsse:UsernameToken>
+    </wsse:Security>`;
+    const securityDoc = new DOMParser().parseFromString(securityXml, 'application/xml');
+    header.appendChild(doc.importNode(securityDoc.documentElement, true));
     body.appendChild(soapSchema.createLoginToPublicPortal(doc, {
         username: { cdata: uname },
         password: { cdata: pword }
