@@ -51,14 +51,34 @@ inputs.forEach((input, index) => {
     });
 });
 
+function sendCriticalErrorReload(errorData) {
+    window.alert('An error occurred that was unable to be recovered from. The website will reload to attempt to fix itself.' + errorData ? '\nIf you report this error to the developer, include this error message: ' + errorData + '.' : '');
+    window.location.reload();
+    return;
+}
+
 function sendError(title, description, buttonText, buttonAction) {
-    document.querySelector('.fill-notif').style.display = 'block';
-    document.querySelector('.fn-in .sh1').innerText = title;
-    document.querySelector('.fn-in .sp').innerText = description;
-    document.querySelector('.fn-in .tvButton').innerText = buttonText;
-    document.querySelector('.fn-in .tvButton').addEventListener('mouseup', () => {
-        buttonAction();
-    });
+    const fillNotif = document.querySelector('.fill-notif');
+    const titleElem = document.querySelector('.fn-in .sh1');
+    const descElem = document.querySelector('.fn-in .sp');
+    const buttonElem = document.querySelector('.fn-in .tvButton');
+
+    if (!fillNotif || !titleElem || !descElem || !buttonElem) {
+        sendCriticalErrorReload();
+        return;
+    }
+
+    try {
+        document.querySelector('.fill-notif').style.display = 'block';
+        document.querySelector('.fn-in .sh1').innerText = title;
+        document.querySelector('.fn-in .sp').innerText = description;
+        document.querySelector('.fn-in .tvButton').innerText = buttonText;
+        document.querySelector('.fn-in .tvButton').addEventListener('mouseup', () => {
+            buttonAction();
+        });
+    } catch (err) {
+        sendCriticalErrorReload(err.message);
+    }
 }
 
 function formatLocalDateTime(date = new Date()) {
@@ -91,6 +111,7 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
     e.preventDefault();
 
     document.getElementById('process-notif').style.display = 'block';
+    errorBox.style.display = 'none';
 
     const uname = e.target.querySelector('#ci-username').value;
     const pword = e.target.querySelector('#ci-password').value;
@@ -114,18 +135,44 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
     }));
 
     const loginXMLPayload = new XMLSerializer().serializeToString(doc).replaceAll(/ xmlns=""/g, '').replaceAll(/\n/g, '').replaceAll(/\t/g, '');
-    const loginXMLResponse = await fetch(rootUrl, {
-        'headers': {
-            'SOAPAction': 'urn:loginToPublicPortal',
-            'stamp-of-time': formatLocalDateTime(),
-            'Accept': '*/*',
-            'Accept-Language': 'en-US, en;q=0.9',
-            'Content-Type': 'text/xml; charset=UTF-8'
-        },
-        'method': 'POST',
-        'body': loginXMLPayload
-    });
+
+    let loginXMLResponse;
+    try {
+        loginXMLResponse = await fetch(rootUrl, {
+            'headers': {
+                'SOAPAction': 'urn:loginToPublicPortal',
+                'stamp-of-time': formatLocalDateTime(),
+                'Accept': '*/*',
+                'Accept-Language': 'en-US, en;q=0.9',
+                'Content-Type': 'text/xml; charset=UTF-8'
+            },
+            'method': 'POST',
+            'body': loginXMLPayload
+        });
+    } catch (err) {
+        const errorBox = document.getElementById('errorBox');
+        if (!errorBox) {
+            sendError('Critical Error', 'There was an issue logging into PowerSchool and the error failed to display.', 'Refresh', window.location.reload);
+            return;
+        }
+        errorBox.innerHTML = 'The login request failed. Code: ' + loginXMLResponse.status + ' (' + loginXMLResponse.statusText + ').'
+        errorBox.style.display = 'block';
+    }
+
+    document.getElementById('process-notif').style.display = 'block';
+
     const loginXMLData = new DOMParser().parseFromString(await loginXMLResponse.text(), 'application/xml');
 
     console.log(loginXMLData);
+
+    const loginErrorMessage = loginXMLData.querySelector('messageVOs');
+    if (loginErrorMessage) {
+        const errorBox = document.getElementById('errorBox');
+        if (!errorBox) {
+            sendError('Critical Error', 'There was an issue logging into PowerSchool and the error failed to display.', 'Refresh', window.location.reload);
+            return;
+        }
+        errorBox.innerHTML = loginErrorMessage.querySelector('title').textContent + ': ' + loginErrorMessage.querySelector('description').textContent + '.';
+        errorBox.style.display = 'block';
+    }
 });
