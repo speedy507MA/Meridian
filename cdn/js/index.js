@@ -113,5 +113,18 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
         password: { cdata: pword }
     }));
 
-    console.log(new XMLSerializer().serializeToString(doc).replaceAll(/ xmlns=""/g, '').replaceAll(/\n/g, '').replaceAll(/\t/g, ''));
+    const loginXMLPayload = new XMLSerializer().serializeToString(doc).replaceAll(/ xmlns=""/g, '').replaceAll(/\n/g, '').replaceAll(/\t/g, '');
+    const loginXMLResponse = await fetch(rootUrl, {
+        'headers': {
+            'SOAPAction': 'url:loginToPublicPortal',
+            'stamp-of-time': formatLocalDateTime(),
+            'Accept': '*/*',
+            'Accept-Language': 'en-US, en;q=0.9',
+            'Content-Type': 'text/xml; charset=UTF-8'
+        },
+        'method': 'POST',
+        'body': loginXMLPayload
+    });
+    const loginXMLData = new DOMParser().parseFromString(await loginXMLPayload.text(), 'application/xml');
+    console.log(loginXMLData);
 });
