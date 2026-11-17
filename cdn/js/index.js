@@ -92,6 +92,7 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
     const uname = e.target.querySelector('#ci-username').value;
     const pword = e.target.querySelector('#ci-password').value;
     const doc = soapSchema.structXML(true);
+    console.log(doc);
     const header = doc.querySelector('soap:Header');
     const body = doc.querySelector('soap:Body');
     header.innerHTML = `
