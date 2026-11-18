@@ -341,9 +341,9 @@
   function Md5(sharedMemory) {
     if (sharedMemory) {
       blocks[0] = blocks[16] = blocks[1] = blocks[2] = blocks[3] =
-      blocks[4] = blocks[5] = blocks[6] = blocks[7] =
-      blocks[8] = blocks[9] = blocks[10] = blocks[11] =
-      blocks[12] = blocks[13] = blocks[14] = blocks[15] = 0;
+        blocks[4] = blocks[5] = blocks[6] = blocks[7] =
+        blocks[8] = blocks[9] = blocks[10] = blocks[11] =
+        blocks[12] = blocks[13] = blocks[14] = blocks[15] = 0;
       this.blocks = blocks;
       this.buffer8 = buffer8;
     } else {
@@ -385,9 +385,9 @@
         this.hashed = false;
         blocks[0] = blocks[16];
         blocks[16] = blocks[1] = blocks[2] = blocks[3] =
-        blocks[4] = blocks[5] = blocks[6] = blocks[7] =
-        blocks[8] = blocks[9] = blocks[10] = blocks[11] =
-        blocks[12] = blocks[13] = blocks[14] = blocks[15] = 0;
+          blocks[4] = blocks[5] = blocks[6] = blocks[7] =
+          blocks[8] = blocks[9] = blocks[10] = blocks[11] =
+          blocks[12] = blocks[13] = blocks[14] = blocks[15] = 0;
       }
 
       if (isString) {
@@ -485,9 +485,9 @@
       }
       blocks[0] = blocks[16];
       blocks[16] = blocks[1] = blocks[2] = blocks[3] =
-      blocks[4] = blocks[5] = blocks[6] = blocks[7] =
-      blocks[8] = blocks[9] = blocks[10] = blocks[11] =
-      blocks[12] = blocks[13] = blocks[14] = blocks[15] = 0;
+        blocks[4] = blocks[5] = blocks[6] = blocks[7] =
+        blocks[8] = blocks[9] = blocks[10] = blocks[11] =
+        blocks[12] = blocks[13] = blocks[14] = blocks[15] = 0;
     }
     blocks[14] = this.bytes << 3;
     blocks[15] = this.hBytes << 3 | this.bytes >>> 29;
@@ -915,6 +915,7 @@
      * md5(new Uint8Array([])); // d41d8cd98f00b204e9800998ecf8427e
      */
     root.md5 = exports;
+    globalThis.md5 = exports;
     if (AMD) {
       define(function () {
         return exports;
