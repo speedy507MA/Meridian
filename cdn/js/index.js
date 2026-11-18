@@ -11,25 +11,6 @@ const userAgent = 'PowerSchool/1793340069 CFNetwork/3896.200.52 Darwin/27.2.0';
 const inputs = document.querySelectorAll('.tvInput');
 const serializer = new XMLSerializer();
 
-async function fetchWithRetry(input, init, maxRetries, timeout) {
-    if (maxRetries === 0) return fetch(input, init);
-    let result;
-    for (let i = 1; i <= maxRetries; i++) {
-        try {
-            const controller = new AbortController();
-            setTimeout(
-                () => controller.abort(),
-                timeout
-            );
-            init = init || {};
-            init.signal = controller.signal;
-            result = await fetch(input, init);
-            return result;
-        } catch (err) { }
-    }
-    return result;
-}
-
 inputs.forEach((input, index) => {
     input.addEventListener('input', () => {
         if (!/^\d*$/.test(input.value)) {
@@ -174,7 +155,7 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
 
     let loginXMLResponse;
     try {
-        loginXMLResponse = fetchWithRetry(rootUrl, {
+        loginXMLResponse = fetch(rootUrl, {
             'headers': {
                 'SOAPAction': 'urn:loginToPublicPortal',
                 'stamp-of-time': formatLocalDateTime(),
@@ -185,7 +166,7 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
             'method': 'POST',
             'body': loginXMLPayload,
             'credentials': 'include'
-        }, 2, 5_000);
+        });
     } catch (err) {
         sendErrorBox(null, 'The login request failed. Code: ' + loginXMLResponse.status + ' (' + loginXMLResponse.statusText + ').', 'Critical Error', 'There was an issue logging into PowerSchool and the error failed to display.');
         return;
@@ -246,7 +227,7 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
     const cnonce = generateCnonce();
     const digest = md5(hash1 + ':' + digestData.nonce + ":00000001:" + cnonce + ':' + digestData.qop + ':' + hash2);
     const authorizationHeader = `Digest username="pearson", realm="${digestData.realm}", nonce="${digestData.nonce}", uri="${urlRootUrlJSON.pathname + urlRootUrlJSON.search}", response="${digest}", cnonce="${cnonce}", nc=00000001, qop="${digestData.qop}"`;
-    const studentDataResponse = await fetchWithRetry(rootUrlJSON, {
+    const studentDataResponse = await fetch(rootUrlJSON, {
         'headers': {
             'Content-Type': 'text/xml; charset=UTF-8',
             'SOAPAction': 'urn:getStudentData',
@@ -260,7 +241,7 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
         'method': 'POST',
         'body': new XMLSerializer().serializeToString(doc2).replaceAll(/ xmlns=""/g, '').replaceAll(/\n/g, '').replaceAll(/\t/g, ''),
         'credentials': 'include'
-    }, 2, 5_000);
+    });
 
     const resppp = await studentDataResponse.text();
     console.log(resppp);
