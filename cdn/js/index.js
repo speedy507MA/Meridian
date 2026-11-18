@@ -159,11 +159,9 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
         errorBox.style.display = 'block';
     }
 
-    document.getElementById('process-notif').style.display = 'block';
+    document.getElementById('process-notif').style.display = 'none';
 
     const loginXMLData = new DOMParser().parseFromString(await loginXMLResponse.text(), 'application/xml');
-
-    console.log(loginXMLData);
 
     const loginErrorMessage = loginXMLData.querySelector('messageVOs');
     if (loginErrorMessage) {
@@ -177,9 +175,12 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
     }
 
     // headers to create proper nonce & http digest auth
-    const headReqResp = await fetch(rootUrlJSON, {
-        'method': 'HEAD'
-    });
-
-    console.log(headReqResp);
+    let headReqResp;
+    try {
+        // http digest auth
+        headReqResp = await fetch(rootUrlJSON, {
+            'method': 'HEAD'
+        });
+    } catch (_) { }
+    console.log(headReqResp.headers.get('Www-Authenticate'));
 });
