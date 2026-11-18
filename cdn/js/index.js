@@ -162,7 +162,8 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
                 'Content-Type': 'text/xml; charset=UTF-8'
             },
             'method': 'POST',
-            'body': loginXMLPayload
+            'body': loginXMLPayload,
+            'credentials': 'include'
         });
     } catch (err) {
         sendErrorBox(null, 'The login request failed. Code: ' + loginXMLResponse.status + ' (' + loginXMLResponse.statusText + ').', 'Critical Error', 'There was an issue logging into PowerSchool and the error failed to display.');
