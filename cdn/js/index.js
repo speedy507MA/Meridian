@@ -1,8 +1,6 @@
 import * as soapSchema from './PSSOAP/schemaParser.js';
 import '/cdn/js/md5.js';
 
-const MAX_RETRIES = 2;
-
 const md5 = globalThis.md5;
 const rootUrl = 'https://md-api.bqbo.workers.dev/pearson-rest/services/PublicPortalService';
 const rootUrlJSON = 'https://md-api.bqbo.workers.dev/pearson-rest/services/PublicPortalService?response=application/json';
@@ -155,7 +153,7 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
 
     let loginXMLResponse;
     try {
-        loginXMLResponse = fetch(rootUrl, {
+        loginXMLResponse = await fetch(rootUrl, {
             'headers': {
                 'SOAPAction': 'urn:loginToPublicPortal',
                 'stamp-of-time': formatLocalDateTime(),
