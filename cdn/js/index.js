@@ -212,7 +212,10 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
             'userId': studentId,
             'userType': 2
         }),
-        'studentIDs': studentId
+        'studentIDs': studentId,
+        'qil': soapSchema.createQueryIncludeListVO(doc2, {
+            'includes': [1]
+        })
     }));
 
     console.log(new XMLSerializer().serializeToString(doc2).replaceAll(/ xmlns=""/g, '').replaceAll(/\n/g, '').replaceAll(/\t/g, ''));
