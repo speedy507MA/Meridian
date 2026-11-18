@@ -175,4 +175,11 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
         errorBox.innerHTML = loginErrorMessage.querySelector('title').textContent + ': ' + loginErrorMessage.querySelector('description').textContent + '.';
         errorBox.style.display = 'block';
     }
+
+    // headers to create proper nonce & http digest auth
+    const headReqResp = await fetch(rootUrlJSON, {
+        'method': 'HEAD'
+    });
+
+    console.log(headReqResp);
 });
