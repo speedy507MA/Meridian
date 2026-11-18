@@ -215,6 +215,8 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
         'studentIDs': studentId
     }));
 
+    console.log(new XMLSerializer().serializeToString(doc2).replaceAll(/ xmlns=""/g, '').replaceAll(/\n/g, '').replaceAll(/\t/g, ''));
+
     const hash1 = md5('pearson:Protected:m0bApP5');
     const hash2 = md5('POST:' + urlRootUrlJSON.pathname + urlRootUrlJSON.search);
     const cnonce = generateCnonce();
