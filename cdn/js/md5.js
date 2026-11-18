@@ -915,6 +915,7 @@
      * md5(new Uint8Array([])); // d41d8cd98f00b204e9800998ecf8427e
      */
     root.md5 = exports;
+    globalThis.md5 = exports;
     if (AMD) {
       define(function () {
         return exports;
@@ -922,6 +923,3 @@
     }
   }
 })();
-
-export { exports as md5 };
-export default exports;

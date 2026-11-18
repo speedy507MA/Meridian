@@ -1,6 +1,7 @@
 import * as soapSchema from './PSSOAP/schemaParser.js';
-import md5 from '/cdn/js/md5.js';
+import '/cdn/js/md5.js';
 
+const md5 = globalThis.md5;
 const rootUrl = 'https://md-api.bqbo.workers.dev/pearson-rest/services/PublicPortalService';
 const rootUrlJSON = 'https://md-api.bqbo.workers.dev/pearson-rest/services/PublicPortalService?response=application/json';
 const urlRootUrlJSON = new URL(rootUrlJSON);
