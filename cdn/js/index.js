@@ -14,7 +14,7 @@ const serializer = new XMLSerializer();
 async function fetchWithRetry(input, init, maxRetries, timeout) {
     if (maxRetries === 0) return fetch(input, init);
     let result;
-    for (i = 1; i <= maxRetries; i++) {
+    for (let i = 1; i <= maxRetries; i++) {
         try {
             const controller = new AbortController();
             setTimeout(
