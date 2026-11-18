@@ -231,7 +231,8 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
             'Authorization': authorizationHeader
         },
         'method': 'POST',
-        'body': new XMLSerializer().serializeToString(doc2).replaceAll(/ xmlns=""/g, '').replaceAll(/\n/g, '').replaceAll(/\t/g, '')
+        'body': new XMLSerializer().serializeToString(doc2).replaceAll(/ xmlns=""/g, '').replaceAll(/\n/g, '').replaceAll(/\t/g, ''),
+        'credentials': 'include'
     });
 
     console.log(studentDataResponse);
