@@ -241,5 +241,12 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
         'credentials': 'include'
     });
 
-    console.log(studentDataResponse);
+    const resppp = await studentDataResponse.text();
+    console.log(resppp);
+    const newWin = window.open('', 'PSData');
+    if (newWin) {
+        const p = newWin.document.createElement('p');
+        p.textContent = resppp;
+        newWin.document.body.appendChild(p);
+    }
 });
