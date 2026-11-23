@@ -110,7 +110,7 @@ function formatLocalDateTime(date = new Date()) {
 async function createAuthorizationHeader(url, method, cnonce) {
     if (!url || !method) throw new Error('A valid URL and method must be provided.');
     if (!(url instanceof URL)) url = new URL(url);
-    cnonce = cnonce || generateCNonce();
+    cnonce = cnonce || generateCnonce();
     const headReqResp = await fetch(url, {
         'method': 'HEAD'
     });
