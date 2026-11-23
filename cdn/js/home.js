@@ -40,6 +40,12 @@ const rootUrlJSON = 'https://md-api.bqbo.workers.dev/pearson-rest/services/Publi
 const urlRootUrlJSON = new URL(rootUrlJSON);
 const userAgent = 'PowerSchool/1793340069 CFNetwork/3896.200.52 Darwin/27.2.0';
 
+function generateCnonce() {
+    const bytes = new Uint8Array(16);
+    crypto.getRandomValues(bytes);
+    return Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
+}
+
 function sendCriticalErrorReload(errorData) {
     window.alert('An error occurred that was unable to be recovered from. The website will reload to attempt to fix itself.' + errorData ? '\nIf you report this error to the developer, include this error message: ' + errorData + '.' : '');
     window.location.reload();
