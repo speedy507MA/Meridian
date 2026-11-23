@@ -1,0 +1,100 @@
+:root {
+    --submit-color: light-dark(#75D4D0, #245B72);
+    --meridian-text-background: light-dark(linear-gradient(90deg, rgb(34, 95, 123) 0%, rgb(30, 98, 117) 25%, rgba(35, 109, 120, 1) 50%, rgba(57, 127, 145, 1) 75%, rgba(36, 91, 114, 1) 100%), linear-gradient(90deg, rgba(217, 244, 238, 1) 0%, rgba(168, 229, 221, 1) 25%, rgba(117, 212, 208, 1) 50%, rgba(164, 223, 240, 1) 75%, rgba(213, 240, 250, 1) 100%));
+    --meridian-text-background-fallback: light-dark(#D9F4EE, #102D3A);
+    --navbar-bckg: light-dark(rgba(141, 210, 242, 0.5), rgba(207, 240, 255, 0.5));
+}
+
+.nav-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 7vh;
+}
+
+.nav {
+    height: inherit;
+    display: flex;
+    width: 90%;
+    background-color: var(--navbar-bckg);
+    backdrop-filter: blur(1rem);
+    border-radius: 1em;
+    padding: 2vh;
+}
+
+.n-logo-container {
+    justify-self: left;
+    height: inherit;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.n-list-container {
+    height: inherit;
+    justify-self: center;
+    justify-content: space-between;
+    align-content: center;
+    list-style: none;
+    display: flex;
+    width: 50%;
+    margin: 0;
+    padding: 0;
+}
+
+.n-profile-container {
+    justify-self: right;
+    height: inherit;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nlc-item {
+    height: inherit;
+    align-content: inherit;
+    flex: 1;
+    justify-content: center;
+
+}
+
+.nlc-logo {
+    stroke-width: 15px;
+    stroke: #72F0D7;
+    height: 70%;
+}
+
+.nlc-item-icon {
+    fill: #002F6D;
+    height: 100%;
+}
+
+.nlci-icon,
+.nlci-span {
+    display: flex;
+    justify-content: center;
+}
+
+.nlci-icon {
+    height: 50%
+}
+
+.nlci-span {
+    height: 50%
+}
+
+.npc-image {
+    height: inherit;
+    aspect-ratio: 1;
+    border: 2px solid #002F6D;
+    border-radius: 50%;
+}
+
+.nlc-item-title {
+    align-self: end;
+    text-align: center;
+    font-size: 100%;
+    text-wrap: nowrap;
+}

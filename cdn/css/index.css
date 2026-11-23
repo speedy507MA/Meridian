@@ -1,9 +1,4 @@
 :root {
-    color-scheme: light dark;
-    --body-background_color: light-dark(#FFF, #444);
-    --body-text_color: light-dark(#000, #FFF);
-    --light-dark: light-dark(#FFF, #000);
-    --dark-light: light-dark(#000, #FFF);
     --submit-color: light-dark(#75D4D0, #245B72);
     --meridian-text-background: light-dark(linear-gradient(90deg, rgb(34, 95, 123) 0%, rgb(30, 98, 117) 25%, rgba(35, 109, 120, 1) 50%, rgba(57, 127, 145, 1) 75%, rgba(36, 91, 114, 1) 100%), linear-gradient(90deg, rgba(217, 244, 238, 1) 0%, rgba(168, 229, 221, 1) 25%, rgba(117, 212, 208, 1) 50%, rgba(164, 223, 240, 1) 75%, rgba(213, 240, 250, 1) 100%));
     --meridian-text-background-fallback: light-dark(#D9F4EE, #102D3A);
@@ -28,24 +23,6 @@ body {
     flex-direction: column;
 }
 
-.fill {
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    inset: 0;
-}
-
-* {
-    transition: 0.5s ease-in-out;
-}
-
-#meridian-ocean {
-    overflow: hidden;
-    isolation: isolate;
-    background: #D9F4F2;
-    z-index: -1;
-}
-
 .f-out {
     flex: 1;
     display: grid;
@@ -64,17 +41,6 @@ body {
     box-shadow: 0 0 25px 1px black;
     padding: 3vw;
     background-color: var(--body-background_color);
-}
-
-.sh1 {
-    font-size: 30pt;
-    font-variation-settings: "wght" 550, "wdth" 50;
-    line-height: 1;
-}
-
-.sp {
-    font-size: 12pt;
-    margin-bottom: 4vh;
 }
 
 .tvif {
@@ -103,42 +69,6 @@ body {
     justify-content: center;
     align-content: center;
     margin-top: 1vh;
-}
-
-.tvButton {
-    padding: 2vh 3vw 2vh 3vw;
-    width: 100%;
-    font-size: 100%;
-    border: 1px solid gray;
-    border-radius: 0.5em;
-    background-color: var(--submit-color);
-    transition: 0.2s;
-}
-
-.tvButton span {
-    color: white;
-    background: var(--meridian-text-background-fallback);
-    background: var(--meridian-text-background);
-    background-clip: text;
-    transition: 0.2s;
-}
-
-.tvButton:hover {
-    transform: scale(0.95);
-    transition: 0.2s;
-    filter: brightness(0.95);
-}
-
-.tvButton:hover span {
-    color: transparent;
-    transition: 0.2s;
-    font-weight: bolder;
-}
-
-.tvButton:active {
-    transform: scale(0.9);
-    transition: 0.2s;
-    filter: brightness(0.9);
 }
 
 .meridian-text {
@@ -175,35 +105,6 @@ body {
 
 .ci-input::placeholder {
     color: white;
-}
-
-.fill-notif {
-    z-index: 1000;
-    height: 100%;
-    width: 100%;
-    position: fixed;
-    backdrop-filter: blur(1.5rem);
-    justify-content: center;
-    align-content: center;
-    display: none;
-}
-
-.fn-in {
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: auto;
-    margin-bottom: auto;
-    width: fit-content;
-    text-align: center;
-    border-radius: 1em;
-    border: 1px solid gray;
-    box-shadow: 0 0 25px 1px black;
-    padding: 3vw;
-    background-color: var(--body-background_color);
-}
-
-.fn-in button {
-    margin-top: 1vh;
 }
 
 .spin {

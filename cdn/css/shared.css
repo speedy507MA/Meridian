@@ -1,0 +1,126 @@
+:root {
+    color-scheme: light dark;
+    --body-background_color: light-dark(#FFF, #444);
+    --body-text_color: light-dark(#000, #FFF);
+    --light-dark: light-dark(#FFF, #000);
+    --dark-light: light-dark(#000, #FFF);
+}
+
+p,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    transition: 0.3s;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spin {
+    animation: spin 1s infinite linear;
+}
+
+.sh1 {
+    font-size: 30pt;
+    font-variation-settings: "wght" 550, "wdth" 50;
+    line-height: 1;
+}
+
+.sp {
+    font-size: 12pt;
+    margin-bottom: 4vh;
+}
+
+.tvButton {
+    padding: 2vh 3vw 2vh 3vw;
+    width: 100%;
+    font-size: 100%;
+    border: 1px solid gray;
+    border-radius: 0.5em;
+    background-color: var(--submit-color);
+    transition: 0.2s;
+}
+
+.tvButton span {
+    color: white;
+    background: var(--meridian-text-background-fallback);
+    background: var(--meridian-text-background);
+    background-clip: text;
+    transition: 0.2s;
+}
+
+.tvButton:hover {
+    transform: scale(0.95);
+    transition: 0.2s;
+    filter: brightness(0.95);
+}
+
+.tvButton:hover span {
+    color: transparent;
+    transition: 0.2s;
+    font-weight: bolder;
+}
+
+.tvButton:active {
+    transform: scale(0.9);
+    transition: 0.2s;
+    filter: brightness(0.9);
+}
+
+#meridian-ocean {
+    overflow: hidden;
+    isolation: isolate;
+    background: #D9F4F2;
+    z-index: -1;
+}
+
+.fill {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    inset: 0;
+}
+
+* {
+    transition: 0.5s ease-in-out;
+}
+
+.fill-notif {
+    z-index: 1000;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    backdrop-filter: blur(1.5rem);
+    justify-content: center;
+    align-content: center;
+    display: none;
+}
+
+.fn-in {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: fit-content;
+    text-align: center;
+    border-radius: 1em;
+    border: 1px solid gray;
+    box-shadow: 0 0 25px 1px black;
+    padding: 3vw;
+    background-color: var(--body-background_color);
+}
+
+.fn-in button {
+    margin-top: 1vh;
+}

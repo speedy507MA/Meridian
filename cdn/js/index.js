@@ -1,6 +1,32 @@
 import * as soapSchema from './PSSOAP/schemaParser.js';
 import '/cdn/js/md5.js';
 
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days && typeof (days) != 'string') {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    } else {
+        expires = days || '';
+    }
+
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+function eraseCookie(name) {
+    document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+
 const md5 = globalThis.md5;
 const rootUrl = 'https://md-api.bqbo.workers.dev/pearson-rest/services/PublicPortalService';
 const rootUrlJSON = 'https://md-api.bqbo.workers.dev/pearson-rest/services/PublicPortalService?response=application/json';
@@ -181,6 +207,7 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
     }
 
     const studentId = parseInt(loginXMLData.querySelector('studentIDs').textContent);
+    setCookie('studentId', studentId, 'Session');
 
     // headers to create proper nonce & http digest auth
     let headReqResp;
