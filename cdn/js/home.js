@@ -140,7 +140,7 @@ doc2.getElementsByTagNameNS(soapSchema.NAMESPACES.SOAP, 'Body')[0].appendChild(s
 
 console.log(new XMLSerializer().serializeToString(doc2).replaceAll(/ xmlns=""/g, '').replaceAll(/\n/g, '').replaceAll(/\t/g, ''));
 
-const authorizationHeader = createAuthorizationHeader()
+const authorizationHeader = await createAuthorizationHeader(rootUrlJSON, 'POST');
 
 const studentDataResponse = await fetch(rootUrlJSON, {
     'headers': {
