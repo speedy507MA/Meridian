@@ -205,7 +205,15 @@ async function sendPowerSchoolRequest(xmlDoc, url, requestData, soapAction, incl
     return fetch(url, requestData)
 }
 
-document.querySelector('#totpValidate').addEventListener('submit', async (e) => {
+const loginForm = document.querySelector('#totpValidate');
+
+console.log('[Login] Element:', loginForm);
+console.log('[Login] Tag:', loginForm?.tagName);
+console.log('[Login] Constructor:', loginForm?.constructor?.name);
+console.log('[Login] addEventListener:', typeof loginForm?.addEventListener);
+
+loginForm.addEventListener('submit', async (e) => {
+    console.log('submit fired');
     e.preventDefault();
 
     document.getElementById('process-notif').style.display = 'block';
