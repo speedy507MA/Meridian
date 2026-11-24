@@ -236,6 +236,7 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
 
         return;
     } catch (err) {
+        console.log(err.message);
         sendErrorBox(null, loginXMLResponse ? 'The login request failed. Code: ' + loginXMLResponse.status + ' (' + loginXMLResponse.statusText + ').' : 'The login request failed.', 'Critical Error', 'There was an issue logging into PowerSchool and the error failed to display.');
         return;
     }
