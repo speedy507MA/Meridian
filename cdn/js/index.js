@@ -34,6 +34,7 @@ const urlRootUrlJSON = new URL(rootUrlJSON);
 const userAgent = 'PowerSchool/1793340069 CFNetwork/3896.200.52 Darwin/27.2.0';
 const inputs = document.querySelectorAll('.tvInput');
 const serializer = new XMLSerializer();
+const errorBox = document.getElementById('errorBox');
 
 inputs.forEach((input, index) => {
     input.addEventListener('input', () => {
