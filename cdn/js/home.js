@@ -118,12 +118,15 @@ async function createAuthorizationHeader(url, method, cnonce) {
     const digestHeader = headReqResp.headers.get('Www-Authenticate');
     if (!digestHeader || digestHeader == '') throw new Error('PowerSchool\'s Digest header wasn\'t provided.');
 
+    console.log(digestHeader);
+
     const digestData = {
         'realm': digestHeader.match(/(?<=realm=")\w*/g)[0],
         'qop': digestHeader.match(/(?<=qop=")\w*/g)[0],
         'nonce': digestHeader.match(/(?<=nonce=")\w*(=?)*/g)[0]
     };
-    if (!digestData.realm || !digestData.realm == '' || !digestData.qop || !digestData.qop == '' || !digestData.nonce || !digestData.nonce == '') throw new Error('PowerSchool didn\'t provide either the realm, nonce, or qop.');
+
+    if (!digestData.realm?.trim() || !digestData.qop?.trim() || !digestData.nonce?.trim()) throw new Error('PowerSchool didn\'t provide either the realm, nonce, or qop.');
 
     const h1 = md5('pearson:Protected:m0bApP5');
     const h2 = md5(method + ':' + url.pathname + url.search);
