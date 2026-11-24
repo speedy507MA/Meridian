@@ -184,7 +184,7 @@ async function sendPowerSchoolRequest(xmlDoc, url, requestData, soapAction, incl
     console.log('spsr: passed check one');
     requestData.headers = requestData.headers || {};
     console.log('spsr: headers defined');
-    requestData.body = xmlDoc instanceof String ? xmlDoc : formatXMLNS((new XMLSerializer()).serializeToString(xmlDoc));
+    requestData.body = xmlDoc instanceof String ? xmlDoc : formatXMLNS(new XMLSerializer().serializeToString(xmlDoc));
     console.log('spsr: body defined');
     requestData.headers['Content-Type'] = 'text/xml; charset=UTF-8';
     requestData.headers['SOAPAction'] = soapAction;
@@ -213,7 +213,7 @@ console.log('[Login] Constructor:', loginForm?.constructor?.name);
 console.log('[Login] addEventListener:', typeof loginForm?.addEventListener);
 
 loginForm.addEventListener('submit', async (e) => {
-    console.log('submit fired');
+    console.log('[Login] Submit was fired');
     e.preventDefault();
 
     document.getElementById('process-notif').style.display = 'block';
@@ -222,7 +222,7 @@ loginForm.addEventListener('submit', async (e) => {
     let loginXMLResponse;
     try {
         loginXMLResponse = await sendPowerSchoolRequest(((doc) => {
-            doc.getElementsByTagNameNS(soapSchema.NAMESPACES.SOAP, 'Header')[0].appendChild(doc.importNode((new DOMParser().parseFromString(`<wsse:Security soap:mustUnderstand="0" xmlns:soap="${soapSchema.NAMESPACES.SOAP}" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"><wsse:UsernameToken><wsse:Username>pearson</wsse:Username><wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">AAAAAAAAAAAAAAAAAAAAAAAAAAA=</wsse:Password></wsse:UsernameToken></wsse:Security>`, 'application/xml')), true));
+            doc.getElementsByTagNameNS(soapSchema.NAMESPACES.SOAP, 'Header')[0].appendChild(doc.importNode((new DOMParser().parseFromString(`<wsse:Security soap:mustUnderstand="0" xmlns:soap="${soapSchema.NAMESPACES.SOAP}" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"><wsse:UsernameToken><wsse:Username>pearson</wsse:Username><wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">AAAAAAAAAAAAAAAAAAAAAAAAAAA=</wsse:Password></wsse:UsernameToken></wsse:Security>`, 'application/xml')).documentElement, true));
             doc.getElementsByTagNameNS(soapSchema.NAMESPACES.SOAP, 'Body')[0].appendChild(soapSchema.createLoginToPublicPortal(doc, {
                 'username': { 'cdata': e.target.querySelector('#ci-username').value },
                 'password': { 'cdata': e.target.querySelector('#ci-password').value }

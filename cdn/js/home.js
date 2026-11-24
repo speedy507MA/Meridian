@@ -141,7 +141,7 @@ async function createAuthorizationHeader(url, method, cnonce) {
 async function sendPowerSchoolRequest(xmlDoc, url, requestData, soapAction, includeCredentials, hasDigest, authHeader) {
     if (!xmlDoc || !url || !soapAction) throw new Error('An XMLDocument, URL, and SOAP Action are required to fulfill this request.');
     requestData.headers = requestData.headers || {};
-    requestData.body = xmlDoc instanceof String ? xmlDoc : formatXMLNS((new XMLSerializer()).serializeToString(xmlDoc));
+    requestData.body = xmlDoc instanceof String ? xmlDoc : formatXMLNS(new XMLSerializer().serializeToString(xmlDoc));
     requestData.headers['Content-Type'] = 'text/xml; charset=UTF-8';
     requestData.headers['SOAPAction'] = soapAction;
     requestData.headers['stamp-of-time'] = formatLocalDateTime();
@@ -176,5 +176,5 @@ try {
 
 document.getElementById('process-notif').style.display = 'none';
 
-const dataReqXML = (new DOMParser()).parseFromString(await dataReqResp.text(), 'application/xml');
+const dataReqXML = new DOMParser().parseFromString(await dataReqResp.text(), 'application/xml');
 console.log(dataReqXML);
