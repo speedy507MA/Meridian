@@ -179,17 +179,29 @@ async function createAuthorizationHeader(url, method, cnonce) {
 }
 
 async function sendPowerSchoolRequest(xmlDoc, url, requestData, soapAction, includeCredentials, hasDigest, authHeader) {
+    console.log('spsr: called');
     if (!xmlDoc || !url || !soapAction) throw new Error('An XMLDocument, URL, and SOAP Action are required to fulfill this request.');
+    console.log('spsr: passed check one');
     requestData.headers = requestData.headers || {};
+    console.log('spsr: headers defined');
     requestData.body = xmlDoc instanceof String ? xmlDoc : formatXMLNS((new XMLSerializer()).serializeToString(xmlDoc));
+    console.log('spsr: body defined');
     requestData.headers['Content-Type'] = 'text/xml; charset=UTF-8';
     requestData.headers['SOAPAction'] = soapAction;
     requestData.headers['stamp-of-time'] = formatLocalDateTime();
     requestData.headers['Accept'] = '*/*';
     requestData.headers['Accept-Language'] = 'en-US, en;q=0.9';
     requestData.headers['User-Agent'] = userAgent;
+    console.log('spsr: headers set');
+    console.log(requestData.headers);
     if (hasDigest) requestData.headers['Authorization'] = authHeader || await createAuthorizationHeader(url, requestData.method || 'GET');
-    requestData.credentials = requestData.credentials || includeCredentials ? 'include' : null
+    console.log('spsr: passed check two');
+    requestData.credentials = requestData.credentials || (includeCredentials ? 'include' : null)
+    console.log('spsr: passed check three');
+    console.log('spsr: created requestData');
+    console.log(requestData);
+    console.log('spsr: pre-fetch');
+    console.log(url);
     return fetch(url, requestData)
 }
 
