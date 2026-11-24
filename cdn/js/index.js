@@ -198,28 +198,6 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
     document.getElementById('process-notif').style.display = 'block';
     errorBox.style.display = 'none';
 
-    const uname = e.target.querySelector('#ci-username').value;
-    const pword = e.target.querySelector('#ci-password').value;
-    const doc = soapSchema.structXML(true);
-    const header = doc.getElementsByTagNameNS(soapSchema.NAMESPACES.SOAP, 'Header')[0];
-    const body = doc.getElementsByTagNameNS(soapSchema.NAMESPACES.SOAP, 'Body')[0];
-    const securityXml = `
-    <wsse:Security soap:mustUnderstand="0"
-        xmlns:soap="${soapSchema.NAMESPACES.SOAP}"
-        xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
-        <wsse:UsernameToken>
-            <wsse:Username>pearson</wsse:Username>
-            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">AAAAAAAAAAAAAAAAAAAAAAAAAAA=</wsse:Password>
-        </wsse:UsernameToken>
-    </wsse:Security>`;
-    const securityDoc = new DOMParser().parseFromString(securityXml, 'application/xml');
-    header.appendChild(doc.importNode(securityDoc.documentElement, true));
-    body.appendChild(soapSchema.createLoginToPublicPortal(doc, {
-        username: { cdata: uname },
-        password: { cdata: pword }
-    }));
-
-    const loginXMLPayload = new XMLSerializer().serializeToString(doc).replaceAll(/ xmlns=""/g, '').replaceAll(/\n/g, '').replaceAll(/\t/g, '');
     let loginXMLResponse;
     try {
         loginXMLResponse = await sendPowerSchoolRequest(((doc) => {
