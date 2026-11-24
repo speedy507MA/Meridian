@@ -1,6 +1,8 @@
 import * as soapSchema from './PSSOAP/schemaParser.js';
 import '/cdn/js/md5.js';
 
+document.getElementById('process-notif').style.display = 'block';
+
 function setCookie(name, value, days) {
     var expires = "";
     if (days && typeof (days) != 'string') {
@@ -39,6 +41,10 @@ const rootUrl = 'https://md-api.bqbo.workers.dev/pearson-rest/services/PublicPor
 const rootUrlJSON = 'https://md-api.bqbo.workers.dev/pearson-rest/services/PublicPortalService?response=application/json';
 const urlRootUrlJSON = new URL(rootUrlJSON);
 const userAgent = 'PowerSchool/1793340069 CFNetwork/3896.200.52 Darwin/27.2.0';
+
+function formatXMLNS(xmlDoc) {
+    return xmlDoc.replaceAll(/ xmlns=""/g, '').replaceAll(/\n/g, '').replaceAll(/\t/g, '');
+}
 
 function generateCnonce() {
     const bytes = new Uint8Array(16);
@@ -118,8 +124,6 @@ async function createAuthorizationHeader(url, method, cnonce) {
     const digestHeader = headReqResp.headers.get('Www-Authenticate');
     if (!digestHeader || digestHeader == '') throw new Error('PowerSchool\'s Digest header wasn\'t provided.');
 
-    console.log(digestHeader);
-
     const digestData = {
         'realm': digestHeader.match(/(?<=realm=")\w*/g)[0],
         'qop': digestHeader.match(/(?<=qop=")\w*/g)[0],
@@ -134,38 +138,43 @@ async function createAuthorizationHeader(url, method, cnonce) {
     return `Digest username="pearson", realm="${digestData.realm}", nonce="${digestData.nonce}", uri="${url.pathname + url.search}", response="${digest}", cnonce="${cnonce}", nc=00000001, qop="${digestData.qop}"`;
 }
 
-const doc2 = soapSchema.structXML(false);
-doc2.getElementsByTagNameNS(soapSchema.NAMESPACES.SOAP, 'Body')[0].appendChild(soapSchema.createGetStudentData(doc2, {
-    'userSessionVO': soapSchema.createUserSessionVO(doc2, {
-        'serviceTicket': '',
-        'userId': studentId,
-        'userType': 2
-    }),
-    'studentIDs': studentId,
-    'qil': soapSchema.createQueryIncludeListVO(doc2, {
-        'includes': [1]
-    })
-}));
+async function sendPowerSchoolRequest(xmlDoc, url, requestData, soapAction, includeCredentials, hasDigest, authHeader) {
+    if (!xmlDoc || !url || !soapAction) throw new Error('An XMLDocument, URL, and SOAP Action are required to fulfill this request.');
+    requestData.headers = requestData.headers || {};
+    requestData.body = xmlDoc instanceof String ? xmlDoc : formatXMLNS((new XMLSerializer()).serializeToString(xmlDoc));
+    requestData.headers['Content-Type'] = 'text/xml; charset=UTF-8';
+    requestData.headers['SOAPAction'] = soapAction;
+    requestData.headers['stamp-of-time'] = formatLocalDateTime();
+    requestData.headers['Accept'] = '*/*';
+    requestData.headers['Accept-Language'] = 'en-US, en;q=0.9';
+    requestData.headers['User-Agent'] = userAgent;
+    if (hasDigest) requestData.headers['Authorization'] = authHeader || await createAuthorizationHeader(url, requestData.method || 'GET');
+    requestData.credentials = requestData.credentials || includeCredentials ? 'include' : null
+    return fetch(url, requestData)
+}
 
-console.log(new XMLSerializer().serializeToString(doc2).replaceAll(/ xmlns=""/g, '').replaceAll(/\n/g, '').replaceAll(/\t/g, ''));
+let dataReqResp;
+try {
+    dataReqResp = await sendPowerSchoolRequest(((doc) => {
+        doc.getElementsByTagNameNS(soapSchema.NAMESPACES.SOAP, 'Body')[0].appendChild(soapSchema.createGetStudentData(doc, {
+            'userSessionVO': soapSchema.createUserSessionVO(doc, {
+                'serviceTicket': '',
+                'userId': studentId,
+                'userType': 2
+            }),
+            'studentIDs': studentId,
+            'qil': soapSchema.createQueryIncludeListVO(doc, {
+                'includes': [1]
+            })
+        }));
+        return doc;
+    })(soapSchema.structXML(false)), rootUrl, { 'headers': { 'Accept-Encoding': 'gzip, deflate, br' }, 'method': 'POST' }, 'urn:getStudentData', true, true);
+} catch (e) {
+    sendError('Request Error', 'There was a problem requesting your grades from PowerSchool.\nError Details (if any): ' + e.message, 'Refresh', window.location.reload);
+    return;
+}
 
-const authorizationHeader = await createAuthorizationHeader(rootUrlJSON, 'POST');
+document.getElementById('process-notif').style.display = 'none';
 
-const studentDataResponse = await fetch(rootUrlJSON, {
-    'headers': {
-        'Content-Type': 'text/xml; charset=UTF-8',
-        'SOAPAction': 'urn:getStudentData',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'stamp-of-time': formatLocalDateTime(),
-        'Accept': '*/*',
-        'Accept-Language': 'en-US, en;q=0.9',
-        'User-Agent': userAgent,
-        'Authorization': authorizationHeader
-    },
-    'method': 'POST',
-    'body': new XMLSerializer().serializeToString(doc2).replaceAll(/ xmlns=""/g, '').replaceAll(/\n/g, '').replaceAll(/\t/g, ''),
-    'credentials': 'include'
-});
-
-const resppp = await studentDataResponse.text();
-document.write(resppp);
+const dataReqXML = (new DOMParser()).parseFromString(await dataReqResp.text(), 'application/xml');
+console.log(dataReqXML);

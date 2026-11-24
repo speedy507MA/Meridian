@@ -81,6 +81,10 @@ inputs.forEach((input, index) => {
     });
 });
 
+function formatXMLNS(xmlDoc) {
+    return xmlDoc.replaceAll(/ xmlns=""/g, '').replaceAll(/\n/g, '').replaceAll(/\t/g, '');
+}
+
 function sendCriticalErrorReload(errorData) {
     window.alert('An error occurred that was unable to be recovered from. The website will reload to attempt to fix itself.' + errorData ? '\nIf you report this error to the developer, include this error message: ' + errorData + '.' : '');
     window.location.reload();
@@ -148,6 +152,46 @@ function generateCnonce() {
     return Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
 }
 
+async function createAuthorizationHeader(url, method, cnonce) {
+    if (!url || !method) throw new Error('A valid URL and method must be provided.');
+    if (!(url instanceof URL)) url = new URL(url);
+    cnonce = cnonce || generateCnonce();
+    const headReqResp = await fetch(url, {
+        'method': 'HEAD'
+    });
+
+    const digestHeader = headReqResp.headers.get('Www-Authenticate');
+    if (!digestHeader || digestHeader == '') throw new Error('PowerSchool\'s Digest header wasn\'t provided.');
+
+    const digestData = {
+        'realm': digestHeader.match(/(?<=realm=")\w*/g)[0],
+        'qop': digestHeader.match(/(?<=qop=")\w*/g)[0],
+        'nonce': digestHeader.match(/(?<=nonce=")\w*(=?)*/g)[0]
+    };
+
+    if (!digestData.realm?.trim() || !digestData.qop?.trim() || !digestData.nonce?.trim()) throw new Error('PowerSchool didn\'t provide either the realm, nonce, or qop.');
+
+    const h1 = md5('pearson:Protected:m0bApP5');
+    const h2 = md5(method + ':' + url.pathname + url.search);
+    const digest = md5(h1 + ':' + digestData.nonce + ':00000001:' + cnonce + ':' + digestData.qop + ':' + h2);
+    return `Digest username="pearson", realm="${digestData.realm}", nonce="${digestData.nonce}", uri="${url.pathname + url.search}", response="${digest}", cnonce="${cnonce}", nc=00000001, qop="${digestData.qop}"`;
+}
+
+async function sendPowerSchoolRequest(xmlDoc, url, requestData, soapAction, includeCredentials, hasDigest, authHeader) {
+    if (!xmlDoc || !url || !soapAction) throw new Error('An XMLDocument, URL, and SOAP Action are required to fulfill this request.');
+    requestData.headers = requestData.headers || {};
+    requestData.body = xmlDoc instanceof String ? xmlDoc : formatXMLNS((new XMLSerializer()).serializeToString(xmlDoc));
+    requestData.headers['Content-Type'] = 'text/xml; charset=UTF-8';
+    requestData.headers['SOAPAction'] = soapAction;
+    requestData.headers['stamp-of-time'] = formatLocalDateTime();
+    requestData.headers['Accept'] = '*/*';
+    requestData.headers['Accept-Language'] = 'en-US, en;q=0.9';
+    requestData.headers['User-Agent'] = userAgent;
+    if (hasDigest) requestData.headers['Authorization'] = authHeader || await createAuthorizationHeader(url, requestData.method || 'GET');
+    requestData.credentials = requestData.credentials || includeCredentials ? 'include' : null
+    return fetch(url, requestData)
+}
+
 document.querySelector('#totpValidate').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -176,104 +220,32 @@ document.querySelector('#totpValidate').addEventListener('submit', async (e) => 
     }));
 
     const loginXMLPayload = new XMLSerializer().serializeToString(doc).replaceAll(/ xmlns=""/g, '').replaceAll(/\n/g, '').replaceAll(/\t/g, '');
-
     let loginXMLResponse;
     try {
-        loginXMLResponse = await fetch(rootUrl, {
-            'headers': {
-                'SOAPAction': 'urn:loginToPublicPortal',
-                'stamp-of-time': formatLocalDateTime(),
-                'Accept': '*/*',
-                'Accept-Language': 'en-US, en;q=0.9',
-                'Content-Type': 'text/xml; charset=UTF-8'
-            },
-            'method': 'POST',
-            'body': loginXMLPayload,
-            'credentials': 'include'
-        });
+        loginXMLResponse = await sendPowerSchoolRequest(((doc) => {
+            doc.getElementsByTagNameNS(soapSchema.NAMESPACES.SOAP, 'Header')[0].appendChild(doc.importNode((new DOMParser().parseFromString(`<wsse:Security soap:mustUnderstand="0" xmlns:soap="${soapSchema.NAMESPACES.SOAP}" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd"><wsse:UsernameToken><wsse:Username>pearson</wsse:Username><wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">AAAAAAAAAAAAAAAAAAAAAAAAAAA=</wsse:Password></wsse:UsernameToken></wsse:Security>`, 'application/xml')), true));
+            doc.getElementsByTagNameNS(soapSchema.NAMESPACES.SOAP, 'Body')[0].appendChild(soapSchema.createLoginToPublicPortal(doc, {
+                'username': { 'cdata': e.target.querySelector('#ci-username').value },
+                'password': { 'cdata': e.target.querySelector('#ci-password').value }
+            }));
+            return doc;
+        })(soapSchema.structXML(true)), rootUrl, { 'method': 'POST' }, 'urn:loginToPublicPortal', true, false);
+
+        document.getElementById('process-notif').style.display = 'none';
+
+        const loginXMLData = new DOMParser().parseFromString(await loginXMLResponse.text(), 'application/xml');
+        const loginErrorMessage = loginXMLData.querySelector('messageVOs');
+        if (loginErrorMessage) {
+            sendErrorBox(loginErrorMessage.querySelector('title').textContent, loginErrorMessage.querySelector('description').textContent + '.', 'Critical Error', 'There was an issue logging into PowerSchool and the error failed to display.')
+        }
+
+        setCookie('studentId', parseInt(loginXMLData.querySelector('studentIDs').textContent), 'Session');
+
+        window.location.href = '/home.html';
+
+        return;
     } catch (err) {
-        sendErrorBox(null, 'The login request failed. Code: ' + loginXMLResponse.status + ' (' + loginXMLResponse.statusText + ').', 'Critical Error', 'There was an issue logging into PowerSchool and the error failed to display.');
+        sendErrorBox(null, loginXMLResponse ? 'The login request failed. Code: ' + loginXMLResponse.status + ' (' + loginXMLResponse.statusText + ').' : 'The login request failed.', 'Critical Error', 'There was an issue logging into PowerSchool and the error failed to display.');
         return;
-    }
-
-    document.getElementById('process-notif').style.display = 'none';
-
-    const loginXMLData = new DOMParser().parseFromString(await loginXMLResponse.text(), 'application/xml');
-
-    const loginErrorMessage = loginXMLData.querySelector('messageVOs');
-    if (loginErrorMessage) {
-        sendErrorBox(loginErrorMessage.querySelector('title').textContent, loginErrorMessage.querySelector('description').textContent + '.', 'Critical Error', 'There was an issue logging into PowerSchool and the error failed to display.');
-        return;
-    }
-
-    const studentId = parseInt(loginXMLData.querySelector('studentIDs').textContent);
-    setCookie('studentId', studentId, 'Session');
-
-    // headers to create proper nonce & http digest auth
-    let headReqResp;
-    try {
-        // http digest auth
-        headReqResp = await fetch(rootUrlJSON, {
-            'method': 'HEAD'
-        });
-    } catch (_) { }
-    const digestHeader = headReqResp.headers.get('Www-Authenticate');
-    if (!digestHeader || digestHeader == '') {
-        sendErrorBox(null, 'PowerSchool returned an empty or malformed handshake request.', 'Critical Error', 'PowerSchool returned an empty or malformed handshake request and error was unable to be displayed normally.');
-        return;
-    }
-    const digestData = {
-        'realm': digestHeader.match(/(?<=realm=")\w*/g)[0],
-        'qop': digestHeader.match(/(?<=qop=")\w*/g)[0],
-        'nonce': digestHeader.match(/(?<=nonce=")\w*(=?)*/g)[0]
-    };
-    if (!digestData.realm || !digestData.qop || !digestData.nonce) {
-        sendErrorBox(null, 'PowerSchool returned an empty or malformed handshake request.', 'Critical Error', 'PowerSchool returned an empty or malformed handshake request and error was unable to be displayed normally.');
-        return;
-    }
-
-    const doc2 = soapSchema.structXML(false);
-    doc2.getElementsByTagNameNS(soapSchema.NAMESPACES.SOAP, 'Body')[0].appendChild(soapSchema.createGetStudentData(doc2, {
-        'userSessionVO': soapSchema.createUserSessionVO(doc2, {
-            'serviceTicket': '',
-            'userId': studentId,
-            'userType': 2
-        }),
-        'studentIDs': studentId,
-        'qil': soapSchema.createQueryIncludeListVO(doc2, {
-            'includes': [1]
-        })
-    }));
-
-    console.log(new XMLSerializer().serializeToString(doc2).replaceAll(/ xmlns=""/g, '').replaceAll(/\n/g, '').replaceAll(/\t/g, ''));
-
-    const hash1 = md5('pearson:Protected:m0bApP5');
-    const hash2 = md5('POST:' + urlRootUrlJSON.pathname + urlRootUrlJSON.search);
-    const cnonce = generateCnonce();
-    const digest = md5(hash1 + ':' + digestData.nonce + ":00000001:" + cnonce + ':' + digestData.qop + ':' + hash2);
-    const authorizationHeader = `Digest username="pearson", realm="${digestData.realm}", nonce="${digestData.nonce}", uri="${urlRootUrlJSON.pathname + urlRootUrlJSON.search}", response="${digest}", cnonce="${cnonce}", nc=00000001, qop="${digestData.qop}"`;
-    const studentDataResponse = await fetch(rootUrlJSON, {
-        'headers': {
-            'Content-Type': 'text/xml; charset=UTF-8',
-            'SOAPAction': 'urn:getStudentData',
-            'Accept-Encoding': 'gzip, deflate, br',
-            'stamp-of-time': formatLocalDateTime(),
-            'Accept': '*/*',
-            'Accept-Language': 'en-US, en;q=0.9',
-            'User-Agent': userAgent,
-            'Authorization': authorizationHeader
-        },
-        'method': 'POST',
-        'body': new XMLSerializer().serializeToString(doc2).replaceAll(/ xmlns=""/g, '').replaceAll(/\n/g, '').replaceAll(/\t/g, ''),
-        'credentials': 'include'
-    });
-
-    const resppp = await studentDataResponse.text();
-    console.log(resppp);
-    const newWin = window.open('', 'PSData');
-    if (newWin) {
-        const p = newWin.document.createElement('p');
-        p.textContent = resppp;
-        newWin.document.body.appendChild(p);
     }
 });
