@@ -234,7 +234,7 @@ document.querySelector('#welcome-subtitle').innerHTML = 'Grade ' + studentGradeL
 
 const termsVO = [...dataReqXML.querySelectorAll('terms')];
 const topLayerTerm = termsVO.find(t => t.querySelector('parentTermId').textContent == '0');
-const gbHeading = document.querySelector('thead.g-heading');
+const gbHeading = document.querySelector('tr.gh-row1');
 
 function parseTerms(parentTerm, termList) {
     const parentTermId = parentTerm.querySelector('id').textContent;
