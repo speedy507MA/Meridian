@@ -13,7 +13,6 @@
 }
 
 .nav {
-    margin-top: 3vh;
     height: 7vh;
     display: flex;
     width: 90%;
@@ -128,6 +127,7 @@
     text-align: center;
     text-wrap: nowrap;
     font-size: clamp(0.6rem, 12cqw, 1rem);
+    margin-bottom: 0;
 }
 
 .nlc-item:hover {
