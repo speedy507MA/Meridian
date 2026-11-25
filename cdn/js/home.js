@@ -60,8 +60,8 @@ function sendCriticalErrorReload(errorData) {
 
 function sendError(title, description, buttonText, buttonAction) {
     const fillNotif = document.querySelector('.fill-notif');
-    const titleElem = document.querySelector('.fn-in .sh1');
-    const descElem = document.querySelector('.fn-in .sp');
+    const titleElem = document.querySelector('.fn-in h1');
+    const descElem = document.querySelector('.fn-in p');
     const buttonElem = document.querySelector('.fn-in .tvButton');
 
     if (!fillNotif || !titleElem || !descElem || !buttonElem) {
@@ -71,8 +71,8 @@ function sendError(title, description, buttonText, buttonAction) {
 
     try {
         document.querySelector('.fill-notif').style.display = 'block';
-        document.querySelector('.fn-in .sh1').innerText = title;
-        document.querySelector('.fn-in .sp').innerText = description;
+        document.querySelector('.fn-in h1').innerText = title;
+        document.querySelector('.fn-in p').innerText = description;
         document.querySelector('.fn-in .tvButton').innerText = buttonText;
         document.querySelector('.fn-in .tvButton').addEventListener('mouseup', () => {
             buttonAction();
@@ -232,87 +232,12 @@ const studentGradeLevel = studentDataVOs.querySelector('student gradeLevel').tex
 document.querySelector('#welcome-message').innerHTML = 'Welcome' + (' ' + studentFirstName ? ', ' + studentFirstName + '!' : '!');
 document.querySelector('#welcome-subtitle').innerHTML = 'Grade ' + studentGradeLevel;
 
-// --- SETUP OUTSIDE YOUR FOR LOOP ---
-const terms = [];
-const records = [];
+const termsVO = [...dataReqXML.querySelectorAll('terms')];
+const yearTerm = termsVO.find(t => t.querySelector('parentTermId').textContent == '0');
+const yearTermId = yearTerm.querySelector('id').textContent;
+const termsLevel_2 = termsVO.filter(t => t.querySelector('parentTermId').textContent == yearTermId);
 
-// Returns true if `outer` completely encloses `inner` (and they aren't identical)
-function contains(outer, inner) {
-    return (
-        outer.start <= inner.start &&
-        inner.end <= outer.end &&
-        (outer.start < inner.start || inner.end < outer.end)
-    );
-}
 
-// Returns true if `item` is a multi-term rollup (like a Semester or Full Year)
-function isRollup(item) {
-    const children = records.filter((other) => contains(item, other));
+for (const term of termsVO) {
 
-    // 1. Starts on the exact same timestamp as a shorter term inside it (e.g., S1 & Q1)
-    if (children.some((child) => child.start === item.start)) {
-        return true;
-    }
-
-    // 2. Encloses at least two non-overlapping terms (e.g., Q1 & Q2 inside S1)
-    for (let i = 0; i < children.length; i++) {
-        for (let j = i + 1; j < children.length; j++) {
-            if (children[i].end <= children[j].start || children[j].end <= children[i].start) {
-                return true;
-            }
-        }
-    }
-
-    return false;
-}
-
-function compareTerms(a, b) {
-    // Case 1: `a` encloses `b`
-    if (contains(a, b)) {
-        // Rollups (S1, S2, Y1) go AFTER what they contain; quarters (Q2, Q4) go BEFORE exams (M1, F1)
-        return isRollup(a) ? 1 : -1;
-    }
-
-    // Case 2: `b` encloses `a`
-    if (contains(b, a)) {
-        return isRollup(b) ? -1 : 1;
-    }
-
-    // Case 3: Neither encloses the other -> sort chronologically by start date
-    return a.start - b.start;
-}
-
-// --- INSIDE YOUR FOR LOOP ---
-// Uses only `term`, `startDate` (Date), and `endDate` (Date)
-
-window.dataReqXML = dataReqXML;
-
-for (const term of dataReqXML.querySelectorAll('reportingTerms')) {
-    const startDate = new Date(term.querySelector('startDate').textContent);
-    const endDate = new Date(term.querySelector('endDate').textContent);
-
-    records.push({
-        term,
-        start: startDate.getTime(),
-        end: endDate.getTime(),
-    });
-
-    records.sort(compareTerms);
-
-    terms.length = 0;
-    for (const record of records) {
-        terms.push(record.term);
-    }
-}
-
-console.log(terms);
-console.log(records);
-
-const termRow = document.querySelector('.gh-row1');
-for (const term of records) {
-    const termElem = document.createElement('th');
-    termElem.className = 'gh-item';
-    termElem.scope = 'col';
-    termElem.innerHTML = term.term.querySelector('abbreviation').textContent;
-    termRow.appendChild(termElem);
 }

@@ -28,7 +28,7 @@ function eraseCookie(name) {
 }
 
 if (getCookie('studentId')) {
-    document.querySelector('#process-notif .sh1').innerHTML = 'Attempting to Log You In'
+    document.querySelector('#process-notif h1').innerHTML = 'Attempting to Log You In'
     document.getElementById('process-notif').style.display = 'block';
     window.location.href = '/home.html';
     window.location.replace(window.location.origin + '/home.html');
@@ -102,8 +102,8 @@ function sendCriticalErrorReload(errorData) {
 
 function sendError(title, description, buttonText, buttonAction) {
     const fillNotif = document.querySelector('.fill-notif');
-    const titleElem = document.querySelector('.fn-in .sh1');
-    const descElem = document.querySelector('.fn-in .sp');
+    const titleElem = document.querySelector('.fn-in h1');
+    const descElem = document.querySelector('.fn-in p');
     const buttonElem = document.querySelector('.fn-in .tvButton');
 
     if (!fillNotif || !titleElem || !descElem || !buttonElem) {
@@ -113,8 +113,8 @@ function sendError(title, description, buttonText, buttonAction) {
 
     try {
         document.querySelector('.fill-notif').style.display = 'block';
-        document.querySelector('.fn-in .sh1').innerText = title;
-        document.querySelector('.fn-in .sp').innerText = description;
+        document.querySelector('.fn-in h1').innerText = title;
+        document.querySelector('.fn-in p').innerText = description;
         document.querySelector('.fn-in .tvButton').innerText = buttonText;
         document.querySelector('.fn-in .tvButton').addEventListener('mouseup', () => {
             buttonAction();

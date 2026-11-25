@@ -8,12 +8,19 @@
 
 p,
 span,
+a,
 h1,
 h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+li,
+blockquote,
+label,
+td,
+th {
+    font-family: 'Noto', sans-serif;
     transition: 0.3s;
 }
 
@@ -59,15 +66,42 @@ h6 {
     -webkit-user-drag: none;
 }
 
-.sh1 {
-    font-size: 30pt;
+h1.title {
+    font-size: 3.05rem;
     font-variation-settings: "wght" 550, "wdth" 50;
-    line-height: 1;
 }
 
-.sp {
-    font-size: 12pt;
-    margin-bottom: 4vh;
+h1,
+.h1 {
+    font-size: 2.4375rem;
+    font-variation-settings: "wght" 550, "wdth" 50;
+}
+
+h2,
+.h2 {
+    font-size: 1.95rem;
+}
+
+h3,
+.h3 {
+    font-size: 1.5625rem;
+}
+
+h4,
+.h4 {
+    font-size: 1.25rem;
+}
+
+h5,
+.h5,
+p,
+.p {
+    font-size: 1rem;
+}
+
+h6,
+.h6 {
+    font-size: 0.875rem;
 }
 
 .tvButton {
@@ -80,7 +114,7 @@ h6 {
     transition: 0.2s;
 }
 
-.tvButton span {
+.tvButton p {
     color: white;
     background: var(--meridian-text-background-fallback);
     background: var(--meridian-text-background);
@@ -94,7 +128,7 @@ h6 {
     filter: brightness(0.95);
 }
 
-.tvButton:hover span {
+.tvButton:hover p {
     color: transparent;
     transition: 0.2s;
     font-weight: bolder;
@@ -152,4 +186,8 @@ h6 {
 
 .fn-in button {
     margin-top: 1vh;
+}
+
+.novisited:visited {
+    color: inherit;
 }
