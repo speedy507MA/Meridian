@@ -210,7 +210,9 @@ try {
         photo.style.display = 'block';
         document.querySelector('.npc-placeholder').style.display = 'none';
     } else throw 0
-} catch (e) { }
+} catch (e) {
+    console.log(e.message);
+}
 
 for (let item of document.querySelectorAll('.nlc-item')) {
     item.addEventListener('mouseup', () => {
