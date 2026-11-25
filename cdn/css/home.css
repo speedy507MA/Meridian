@@ -31,17 +31,7 @@
     align-items: center;
 }
 
-.n-list-container {
-    height: inherit;
-    justify-self: center;
-    justify-content: space-between;
-    align-content: center;
-    list-style: none;
-    display: flex;
-    width: 50%;
-    margin: 0;
-    padding: 0;
-}
+
 
 .n-profile-container {
     justify-self: right;
@@ -52,13 +42,7 @@
     align-items: center;
 }
 
-.nlc-item {
-    height: inherit;
-    align-content: inherit;
-    flex: 1;
-    justify-content: center;
 
-}
 
 .nlc-logo {
     stroke-width: 15px;
@@ -66,24 +50,7 @@
     height: 70%;
 }
 
-.nlc-item-icon {
-    fill: #002F6D;
-    height: 100%;
-}
 
-.nlci-icon,
-.nlci-span {
-    display: flex;
-    justify-content: center;
-}
-
-.nlci-icon {
-    height: 50%
-}
-
-.nlci-span {
-    height: 50%
-}
 
 .npc-image {
     height: inherit;
@@ -105,9 +72,64 @@
     object-position: center;
 }
 
+.n-list-container {
+    height: inherit;
+    justify-self: center;
+    list-style: none;
+
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+
+    width: 50%;
+    margin: 0;
+    padding: 0;
+}
+
+.nlc-item {
+    height: inherit;
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.nlci-icon,
+.nlci-span {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nlci-icon {
+    height: 50%;
+}
+
+.nlci-span {
+    height: 50%;
+    min-width: 0;
+}
+
+.nlc-item-icon {
+    height: 100%;
+    max-width: 100%;
+    width: auto;
+}
+
 .nlc-item-title {
-    align-self: end;
     text-align: center;
-    font-size: 100%;
+    font-size: clamp(0.6rem, 1.2vw, 1rem);
     text-wrap: nowrap;
+}
+
+.nlci-span {
+    container-type: inline-size;
+}
+
+.nlc-item-title {
+    font-size: clamp(0.6rem, 12cqw, 1rem);
 }
