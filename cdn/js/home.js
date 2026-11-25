@@ -208,5 +208,6 @@ try {
         const photo = document.querySelector('.npc-image');
         photo.src = 'data:image/jpeg;base64,' + photoReqXML.querySelector('return').textContent;
         photo.style.display = 'block';
+        document.querySelector('.npc-placeholder').style.display = 'none';
     } else throw 0
 } catch (e) { }
