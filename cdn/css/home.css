@@ -133,3 +133,14 @@
     transition: 0.25s;
     filter: brightness(0.9);
 }
+
+.nlc-item:active {
+    transition: 0.25s;
+    transform: scale(0.9);
+    cursor: pointer;
+}
+
+.nlc-item:active .nlc-item-icon {
+    transition: 0.25s;
+    filter: brightness(0.8);
+}
