@@ -31,8 +31,6 @@
     align-items: center;
 }
 
-
-
 .n-profile-container {
     justify-self: right;
     height: inherit;
@@ -42,15 +40,11 @@
     align-items: center;
 }
 
-
-
 .nlc-logo {
     stroke-width: 15px;
     stroke: #72F0D7;
     height: 70%;
 }
-
-
 
 .npc-image {
     height: inherit;
@@ -76,11 +70,9 @@
     height: inherit;
     justify-self: center;
     list-style: none;
-
     display: flex;
     align-items: stretch;
     justify-content: space-between;
-
     width: 50%;
     margin: 0;
     padding: 0;
@@ -90,11 +82,11 @@
     height: inherit;
     flex: 1;
     min-width: 0;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    transition: 0.25s;
 }
 
 .nlci-icon,
@@ -103,6 +95,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
 }
 
 .nlci-icon {
@@ -112,24 +107,29 @@
 .nlci-span {
     height: 50%;
     min-width: 0;
+    container-type: inline-size;
 }
 
 .nlc-item-icon {
     height: 100%;
     max-width: 100%;
     width: auto;
+    transition: 0.25s;
 }
 
 .nlc-item-title {
     text-align: center;
-    font-size: clamp(0.6rem, 1.2vw, 1rem);
     text-wrap: nowrap;
-}
-
-.nlci-span {
-    container-type: inline-size;
-}
-
-.nlc-item-title {
     font-size: clamp(0.6rem, 12cqw, 1rem);
+}
+
+.nlc-item:hover {
+    transition: 0.25s;
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.nlc-item:hover .nlc-item-icon {
+    transition: 0.25s;
+    filter: brightness(0.9);
 }
