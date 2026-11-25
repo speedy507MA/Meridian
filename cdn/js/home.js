@@ -203,16 +203,13 @@ try {
     if (usePhoto) {
         let photoReqXML = new DOMParser().parseFromString(await photoReqResp.text(), 'application/xml');
         const photoData = photoReqXML.querySelector('return').textContent;
-        console.log(photoData)
         if (!photoData) throw 0
         const photo = document.querySelector('.npc-image');
         photo.src = 'data:image/jpeg;base64,' + photoReqXML.querySelector('return').textContent;
         photo.style.display = 'block';
         document.querySelector('.npc-placeholder').style.display = 'none';
     } else throw 0
-} catch (e) {
-    console.log(e.message);
-}
+} catch (e) { }
 
 for (let item of document.querySelectorAll('.nlc-item')) {
     item.addEventListener('mouseup', () => {
