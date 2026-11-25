@@ -179,6 +179,14 @@ document.getElementById('process-notif').style.display = 'none';
 
 const dataReqXML = new DOMParser().parseFromString(await dataReqResp.text(), 'application/xml');
 
+if (dataReqXML.querySelector('messageVOs description') == 'Service Ticket Expired') {
+    eraseCookie('studentId');
+    window.location.href = window.location.origin;
+    window.location.replace(window.location.origin);
+    document.body.style.display = 'none';
+    throw new Error('Not logged in.');
+}
+
 let photoReqResp;
 let usePhoto;
 try {
@@ -223,3 +231,76 @@ const studentLastName = studentDataVOs.querySelector('student lastName').textCon
 const studentGradeLevel = studentDataVOs.querySelector('student gradeLevel').textContent;
 document.querySelector('#welcome-message').innerHTML = 'Welcome' + (' ' + studentFirstName ? ', ' + studentFirstName + '!' : '!');
 document.querySelector('#welcome-subtitle').innerHTML = 'Grade ' + studentGradeLevel;
+
+// --- SETUP OUTSIDE YOUR FOR LOOP ---
+const terms = [];
+const records = [];
+
+// Returns true if `outer` completely encloses `inner` (and they aren't identical)
+function contains(outer, inner) {
+    return (
+        outer.start <= inner.start &&
+        inner.end <= outer.end &&
+        (outer.start < inner.start || inner.end < outer.end)
+    );
+}
+
+// Returns true if `item` is a multi-term rollup (like a Semester or Full Year)
+function isRollup(item) {
+    const children = records.filter((other) => contains(item, other));
+
+    // 1. Starts on the exact same timestamp as a shorter term inside it (e.g., S1 & Q1)
+    if (children.some((child) => child.start === item.start)) {
+        return true;
+    }
+
+    // 2. Encloses at least two non-overlapping terms (e.g., Q1 & Q2 inside S1)
+    for (let i = 0; i < children.length; i++) {
+        for (let j = i + 1; j < children.length; j++) {
+            if (children[i].end <= children[j].start || children[j].end <= children[i].start) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+function compareTerms(a, b) {
+    // Case 1: `a` encloses `b`
+    if (contains(a, b)) {
+        // Rollups (S1, S2, Y1) go AFTER what they contain; quarters (Q2, Q4) go BEFORE exams (M1, F1)
+        return isRollup(a) ? 1 : -1;
+    }
+
+    // Case 2: `b` encloses `a`
+    if (contains(b, a)) {
+        return isRollup(b) ? -1 : 1;
+    }
+
+    // Case 3: Neither encloses the other -> sort chronologically by start date
+    return a.start - b.start;
+}
+
+// --- INSIDE YOUR FOR LOOP ---
+// Uses only `term`, `startDate` (Date), and `endDate` (Date)
+for (const term in dataReqXML.querySelectorAll('reportingTerms')) {
+    const startDate = new Date(term.querySelector('startDate').textContent);
+    const endDate = new Date(term.querySelector('endDate').textContent);
+
+    records.push({
+        term,
+        start: startDate.getTime(),
+        end: endDate.getTime(),
+    });
+
+    records.sort(compareTerms);
+
+    terms.length = 0;
+    for (const record of records) {
+        terms.push(record.term);
+    }
+}
+
+console.log(terms);
+console.log(records);
