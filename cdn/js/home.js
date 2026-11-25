@@ -214,6 +214,6 @@ try {
 
 for (let item of document.querySelectorAll('.nlc-item')) {
     item.addEventListener('mouseup', () => {
-        window.location.href = item.href;
+        window.location.href = item.getAttribute('href');
     });
 }
