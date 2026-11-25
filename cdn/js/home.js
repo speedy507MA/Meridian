@@ -178,9 +178,8 @@ try {
 document.getElementById('process-notif').style.display = 'none';
 
 const dataReqXML = new DOMParser().parseFromString(await dataReqResp.text(), 'application/xml');
-console.log(dataReqXML);
-window.drxml = dataReqXML;
-if (dataReqXML.querySelector('messageVOs msgCode') == 1) {
+
+if (dataReqXML.querySelector('messageVOs msgCode').textContent == 1) {
     eraseCookie('studentId');
     window.location.href = window.location.origin;
     window.location.replace(window.location.origin);
