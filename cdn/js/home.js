@@ -235,6 +235,7 @@ document.querySelector('#welcome-subtitle').innerHTML = 'Grade ' + studentGradeL
 const termsVO = [...dataReqXML.querySelectorAll('terms')];
 const topLayerTerm = termsVO.find(t => t.querySelector('parentTermId').textContent == '0');
 const gbHeading = document.querySelector('tr.gh-row1');
+const gbBody = document.querySelector('tr.gb-course');
 
 function parseTerms(parentTerm, termList) {
     const parentTermId = parentTerm.querySelector('id').textContent;
@@ -253,3 +254,20 @@ function parseTerms(parentTerm, termList) {
 }
 
 parseTerms(topLayerTerm, termsVO);
+
+// sections/courses
+const sections = [...dataReqXML.querySelectorAll('sections')];
+sections.sort((a, b) => {
+    const vA = Number(a.querySelector('periodSort').textContent.trim());
+    const vB = Number(b.querySelector('periodSort').textContent.trim());
+    return vA - vB;
+});
+
+for (const section of sections) {
+    const secElem = document.createElement('tr');
+    secElem.className = 'gb-course';
+    const seName = document.createElement('td');
+    seName.innerHTML = section.querySelector('schoolCourseTitle').textContent;
+    secElem.appendChild(seName);
+    gbBody.appendChild(secElem);
+}
