@@ -218,8 +218,8 @@ for (let item of document.querySelectorAll('.nlc-item')) {
 }
 
 const studentDataVOs = dataReqXML.querySelector('studentDataVOs');
-const studentFirstName = studentDataVOs.querySelector('student firstName');
-const studentLastName = studentDataVOs.querySelector('student lastName');
-const studentGradeLevel = studentDataVOs.querySelector('student gradeLevel');
+const studentFirstName = studentDataVOs.querySelector('student firstName').textContent;
+const studentLastName = studentDataVOs.querySelector('student lastName').textContent;
+const studentGradeLevel = studentDataVOs.querySelector('student gradeLevel').textContent;
 document.querySelector('#welcome-message').innerHTML = 'Welcome' + studentFirstName ? ', ' + studentFirstName + '!' : '!';
 document.querySelector('#welcome-subtitle').innerHTML = 'Grade ' + studentGradeLevel;
