@@ -222,5 +222,5 @@ const studentDataVOs = dataReqXML.querySelector('studentDataVOs');
 const studentFirstName = studentDataVOs.querySelector('student firstName').textContent;
 const studentLastName = studentDataVOs.querySelector('student lastName').textContent;
 const studentGradeLevel = studentDataVOs.querySelector('student gradeLevel').textContent;
-document.querySelector('#welcome-message').innerHTML = 'Welcome' + studentFirstName ? ', ' + studentFirstName + '!' : '!';
+document.querySelector('#welcome-message').innerHTML = 'Welcome' + (studentFirstName ? ', ' + studentFirstName + '!' : '!');
 document.querySelector('#welcome-subtitle').innerHTML = 'Grade ' + studentGradeLevel;
