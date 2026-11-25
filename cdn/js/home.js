@@ -202,7 +202,8 @@ try {
 try {
     if (usePhoto) {
         photoReqXML = new DOMParser().parseFromString(await photoReqResp.text(), 'application/xml');
-        const photoData = photoReqXML?.querySelector('return')?.textContent;
+        const photoData = photoReqXML.querySelector('return').textContent;
+        console.log(photoData)
         if (!photoData) throw 0
         const photo = document.querySelector('.npc-image');
         photo.src = 'data:image/jpeg;base64,' + photoReqXML.querySelector('return').textContent;
