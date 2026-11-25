@@ -211,3 +211,9 @@ try {
         document.querySelector('.npc-placeholder').style.display = 'none';
     } else throw 0
 } catch (e) { }
+
+for (let item of document.querySelectorAll('.nlc-item')) {
+    item.addEventListener('mouseup', () => {
+        window.location.href = item.href;
+    });
+}
