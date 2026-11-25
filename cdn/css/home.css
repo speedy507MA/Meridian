@@ -144,3 +144,15 @@
     transition: 0.25s;
     filter: brightness(0.8);
 }
+
+.main {
+    margin-top: 7vh;
+    width: 100%;
+}
+
+.welcome-message-area {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}

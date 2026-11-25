@@ -199,10 +199,9 @@ try {
     sendError('Request Error', 'Meridian was unable to fetch your student photo, so your profile picture will appear blank.', 'Ok', () => { });
     throw e;
 }
-let photoReqXML;
 try {
     if (usePhoto) {
-        photoReqXML = new DOMParser().parseFromString(await photoReqResp.text(), 'application/xml');
+        let photoReqXML = new DOMParser().parseFromString(await photoReqResp.text(), 'application/xml');
         const photoData = photoReqXML.querySelector('return').textContent;
         console.log(photoData)
         if (!photoData) throw 0
@@ -225,5 +224,5 @@ const studentDataVOs = dataReqXML.querySelector('studentDataVOs');
 const studentFirstName = studentDataVOs.querySelector('student firstName').textContent;
 const studentLastName = studentDataVOs.querySelector('student lastName').textContent;
 const studentGradeLevel = studentDataVOs.querySelector('student gradeLevel').textContent;
-document.querySelector('#welcome-message').innerHTML = 'Welcome' + (studentFirstName ? ', ' + studentFirstName + '!' : '!');
+document.querySelector('#welcome-message').innerHTML = 'Welcome' + (' ' + studentFirstName ? ', ' + studentFirstName + '!' : '!');
 document.querySelector('#welcome-subtitle').innerHTML = 'Grade ' + studentGradeLevel;
