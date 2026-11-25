@@ -233,11 +233,23 @@ document.querySelector('#welcome-message').innerHTML = 'Welcome' + (' ' + studen
 document.querySelector('#welcome-subtitle').innerHTML = 'Grade ' + studentGradeLevel;
 
 const termsVO = [...dataReqXML.querySelectorAll('terms')];
-const yearTerm = termsVO.find(t => t.querySelector('parentTermId').textContent == '0');
-const yearTermId = yearTerm.querySelector('id').textContent;
-const termsLevel_2 = termsVO.filter(t => t.querySelector('parentTermId').textContent == yearTermId);
+const topLayerTerm = termsVO.find(t => t.querySelector('parentTermId').textContent == '0');
+const gbHeading = document.querySelector('thead.g-heading');
 
-
-for (const term of termsVO) {
-
+function parseTerms(parentTerm, termList) {
+    const parentTermId = parentTerm.querySelector('id').textContent;
+    const filteredTermList = termList.filter(t => t.querySelector('parentTermId').textContent == parentTermId);
+    for (const term of filteredTermList) {
+        const termId = term.querySelector('id').textContent;
+        if (termList.some(t => t.querySelector('parentTermId').textContent == termId)) {
+            parseTerms(term, termList);
+        }
+        const termElem = document.createElement('th');
+        termElem.className = 'gh-item';
+        termElem.scope = 'col';
+        termElem.innerHTML = term.querySelector('abbrev').textContent;
+        gbHeading.appendChild(termElem);
+    }
 }
+
+parseTerms(topLayerTerm, termsVO);
