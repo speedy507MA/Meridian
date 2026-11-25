@@ -179,7 +179,7 @@ document.getElementById('process-notif').style.display = 'none';
 
 const dataReqXML = new DOMParser().parseFromString(await dataReqResp.text(), 'application/xml');
 
-if (dataReqXML.querySelector('messageVOs description') == 'Service Ticket Expired') {
+if (dataReqXML.querySelector('messageVOs msgCode') == 1) {
     eraseCookie('studentId');
     window.location.href = window.location.origin;
     window.location.replace(window.location.origin);
