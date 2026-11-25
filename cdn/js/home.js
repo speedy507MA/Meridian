@@ -200,8 +200,13 @@ try {
     sendError('Request Error', 'Meridian was unable to fetch your student photo, so your profile picture will appear blank.', 'Ok', () => { });
     throw e;
 }
-
-if (usePhoto) {
-    const photoReqXML = new DOMParser().parseFromString(await photoReqResp.text(), 'application/xml');
-    console.log(photoReqXML);
-}
+try {
+    if (usePhoto) {
+        const photoReqXML = new DOMParser().parseFromString(await photoReqResp.text(), 'application/xml');
+        const photoData = photoReqXML?.querySelector('return')?.textContent;
+        if (!photoData) throw 0
+        const photo = document.querySelector('.npc-image');
+        photo.src = 'data:image/jpeg;base64,' + photoReqXML.querySelector('return').textContent;
+        photo.style.display = 'block';
+    } else throw 0
+} catch (e) { }

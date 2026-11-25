@@ -90,6 +90,11 @@
     aspect-ratio: 1;
     border: 2px solid #002F6D;
     border-radius: 50%;
+    display: none;
+}
+
+.npc-placeholder {
+    display: block;
 }
 
 .nlc-item-title {

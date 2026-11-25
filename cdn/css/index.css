@@ -107,26 +107,6 @@ body {
     color: white;
 }
 
-@media (prefers-color-scheme: light) {
-    .whiteOnly {
-        display: initial;
-    }
-
-    .blackOnly {
-        display: none;
-    }
-}
-
-@media (prefers-color-scheme: dark) {
-    .whiteOnly {
-        display: none;
-    }
-
-    .blackOnly {
-        display: initial;
-    }
-}
-
 #errorBox {
     display: none;
     color: red;
