@@ -107,18 +107,6 @@ body {
     color: white;
 }
 
-.spin {
-    animation: spin 1s infinite linear;
-}
-
-.loadWheel {
-    height: 5vh;
-    width: 5vh;
-    margin-top: 1vh;
-    user-select: none;
-    -webkit-user-drag: none;
-}
-
 @media (prefers-color-scheme: light) {
     .whiteOnly {
         display: initial;

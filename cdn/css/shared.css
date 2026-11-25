@@ -31,6 +31,14 @@ h6 {
     animation: spin 1s infinite linear;
 }
 
+.loadWheel {
+    height: 5vh;
+    width: 5vh;
+    margin-top: 1vh;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
 .sh1 {
     font-size: 30pt;
     font-variation-settings: "wght" 550, "wdth" 50;
