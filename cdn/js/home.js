@@ -284,6 +284,9 @@ function compareTerms(a, b) {
 
 // --- INSIDE YOUR FOR LOOP ---
 // Uses only `term`, `startDate` (Date), and `endDate` (Date)
+
+window.dataReqXML = dataReqXML;
+
 for (const term in dataReqXML.querySelectorAll('reportingTerms')) {
     const startDate = new Date(term.querySelector('startDate').textContent);
     const endDate = new Date(term.querySelector('endDate').textContent);
