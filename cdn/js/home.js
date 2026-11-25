@@ -199,6 +199,7 @@ try {
     sendError('Request Error', 'Meridian was unable to fetch your student photo, so your profile picture will appear blank.', 'Ok', () => { });
     throw e;
 }
+let photoReqXML;
 try {
     if (usePhoto) {
         photoReqXML = new DOMParser().parseFromString(await photoReqResp.text(), 'application/xml');
