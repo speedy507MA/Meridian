@@ -9,11 +9,11 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    height: 7vh;
+    height: 11vh;
 }
 
 .nav {
-    height: inherit;
+    height: 7vh;
     display: flex;
     width: 90%;
     background-color: var(--navbar-bckg);
@@ -152,7 +152,6 @@
 }
 
 .main {
-    margin-top: 7vh;
     width: 100%;
 }
 
