@@ -138,7 +138,7 @@ async function createAuthorizationHeader(url, method, cnonce) {
     return `Digest username="pearson", realm="${digestData.realm}", nonce="${digestData.nonce}", uri="${url.pathname + url.search}", response="${digest}", cnonce="${cnonce}", nc=00000001, qop="${digestData.qop}"`;
 }
 
-async function sendPowerSchoolRequest(xmlDoc, url, requestData, soapAction, includeCredentials, hasDigest, authHeader) {
+async function sendPowerSchoolRequest(xmlDoc, url, requestData, soapAction, includeCredentials, hasDigest, customFetchUrl, authHeader) {
     if (!xmlDoc || !url || !soapAction) throw new Error('An XMLDocument, URL, and SOAP Action are required to fulfill this request.');
     requestData.headers = requestData.headers || {};
     requestData.body = xmlDoc instanceof String ? xmlDoc : formatXMLNS(new XMLSerializer().serializeToString(xmlDoc));
@@ -150,7 +150,7 @@ async function sendPowerSchoolRequest(xmlDoc, url, requestData, soapAction, incl
     requestData.headers['User-Agent'] = userAgent;
     if (hasDigest) requestData.headers['Authorization'] = authHeader || await createAuthorizationHeader(url, requestData.method || 'GET');
     requestData.credentials = requestData.credentials || includeCredentials ? 'include' : null
-    return fetch(url, requestData)
+    return fetch(customFetchUrl || url, requestData)
 }
 
 let dataReqResp;
@@ -168,7 +168,7 @@ try {
             })
         }));
         return doc;
-    })(soapSchema.structXML(false)), rootUrlJSON, { 'headers': { 'Accept-Encoding': 'gzip, deflate, br' }, 'method': 'POST' }, 'urn:getStudentData', true, true);
+    })(soapSchema.structXML(false)), rootUrlJSON, { 'headers': { 'Accept-Encoding': 'gzip, deflate, br' }, 'method': 'POST' }, 'urn:getStudentData', true, true, rootUrl);
 } catch (e) {
     sendError('Request Error', 'There was a problem requesting your grades from PowerSchool.\nError Details (if any): ' + e.message, 'Refresh', window.location.reload);
     throw e;

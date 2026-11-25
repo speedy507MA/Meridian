@@ -186,42 +186,24 @@ async function createAuthorizationHeader(url, method, cnonce) {
     return `Digest username="pearson", realm="${digestData.realm}", nonce="${digestData.nonce}", uri="${url.pathname + url.search}", response="${digest}", cnonce="${cnonce}", nc=00000001, qop="${digestData.qop}"`;
 }
 
-async function sendPowerSchoolRequest(xmlDoc, url, requestData, soapAction, includeCredentials, hasDigest, authHeader) {
-    console.log('spsr: called');
+async function sendPowerSchoolRequest(xmlDoc, url, requestData, soapAction, includeCredentials, hasDigest, customFetchUrl, authHeader) {
     if (!xmlDoc || !url || !soapAction) throw new Error('An XMLDocument, URL, and SOAP Action are required to fulfill this request.');
-    console.log('spsr: passed check one');
     requestData.headers = requestData.headers || {};
-    console.log('spsr: headers defined');
     requestData.body = xmlDoc instanceof String ? xmlDoc : formatXMLNS(new XMLSerializer().serializeToString(xmlDoc));
-    console.log('spsr: body defined');
     requestData.headers['Content-Type'] = 'text/xml; charset=UTF-8';
     requestData.headers['SOAPAction'] = soapAction;
     requestData.headers['stamp-of-time'] = formatLocalDateTime();
     requestData.headers['Accept'] = '*/*';
     requestData.headers['Accept-Language'] = 'en-US, en;q=0.9';
     requestData.headers['User-Agent'] = userAgent;
-    console.log('spsr: headers set');
-    console.log(requestData.headers);
     if (hasDigest) requestData.headers['Authorization'] = authHeader || await createAuthorizationHeader(url, requestData.method || 'GET');
-    console.log('spsr: passed check two');
-    requestData.credentials = requestData.credentials || (includeCredentials ? 'include' : null)
-    console.log('spsr: passed check three');
-    console.log('spsr: created requestData');
-    console.log(requestData);
-    console.log('spsr: pre-fetch');
-    console.log(url);
-    return fetch(url, requestData)
+    requestData.credentials = requestData.credentials || includeCredentials ? 'include' : null
+    return fetch(customFetchUrl || url, requestData)
 }
 
 const loginForm = document.querySelector('#totpValidate');
 
-console.log('[Login] Element:', loginForm);
-console.log('[Login] Tag:', loginForm?.tagName);
-console.log('[Login] Constructor:', loginForm?.constructor?.name);
-console.log('[Login] addEventListener:', typeof loginForm?.addEventListener);
-
 loginForm.addEventListener('submit', async (e) => {
-    console.log('[Login] Submit was fired');
     e.preventDefault();
 
     document.getElementById('process-notif').style.display = 'block';
