@@ -308,7 +308,7 @@ for (const term of dataReqXML.querySelectorAll('reportingTerms')) {
 console.log(terms);
 console.log(records);
 
-const termRow = document.querySelector('gh-row1');
+const termRow = document.querySelector('.gh-row1');
 for (const term of records) {
     const termElem = document.createElement('th');
     termElem.className = 'gh-item';
