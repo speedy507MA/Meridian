@@ -54,6 +54,9 @@
     display: none;
     object-fit: cover;
     object-position: center;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
 }
 
 .npc-placeholder {
@@ -64,6 +67,9 @@
     border-radius: 50%;
     object-fit: cover;
     object-position: center;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
 }
 
 .n-list-container {
