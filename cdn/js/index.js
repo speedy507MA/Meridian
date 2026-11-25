@@ -118,6 +118,7 @@ function sendError(title, description, buttonText, buttonAction) {
         document.querySelector('.fn-in .tvButton').innerText = buttonText;
         document.querySelector('.fn-in .tvButton').addEventListener('mouseup', () => {
             buttonAction();
+            document.querySelector('.fill-notif').style.display = 'none';
         });
     } catch (err) {
         sendCriticalErrorReload(err.message);

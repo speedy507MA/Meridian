@@ -76,6 +76,7 @@ function sendError(title, description, buttonText, buttonAction) {
         document.querySelector('.fn-in .tvButton').innerText = buttonText;
         document.querySelector('.fn-in .tvButton').addEventListener('mouseup', () => {
             buttonAction();
+            document.querySelector('.fill-notif').style.display = 'none';
         });
     } catch (err) {
         sendCriticalErrorReload(err.message);
@@ -178,3 +179,29 @@ document.getElementById('process-notif').style.display = 'none';
 
 const dataReqXML = new DOMParser().parseFromString(await dataReqResp.text(), 'application/xml');
 console.log(dataReqXML);
+
+let photoReqResp;
+let usePhoto;
+try {
+    photoReqResp = await sendPowerSchoolRequest(((doc) => {
+        doc.getElementsByTagNameNS(soapSchema.NAMESPACES.SOAP, 'Body')[0].appendChild(soapSchema.createGetStudentPhoto(doc, {
+            'userSessionVO': soapSchema.createUserSessionVO(doc, {
+                'serviceTicket': '',
+                'userId': studentId,
+                'userType': 2
+            }),
+            'studentID': studentId
+        }));
+        return doc;
+    })(soapSchema.structXML(false)), rootUrlJSON, { 'method': 'POST' }, 'urn:getStudentPhoto', true, true, rootUrl);
+    usePhoto = true;
+} catch (e) {
+    usePhoto = false;
+    sendError('Request Error', 'Meridian was unable to fetch your student photo, so your profile picture will appear blank.', 'Ok', () => { });
+    throw e;
+}
+
+if (usePhoto) {
+    const photoReqXML = new DOMParser().parseFromString(await photoReqResp.text(), 'application/xml');
+    console.log(photoReqXML);
+}
