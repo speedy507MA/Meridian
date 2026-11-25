@@ -178,7 +178,6 @@ try {
 document.getElementById('process-notif').style.display = 'none';
 
 const dataReqXML = new DOMParser().parseFromString(await dataReqResp.text(), 'application/xml');
-console.log(dataReqXML);
 
 let photoReqResp;
 let usePhoto;
@@ -202,7 +201,7 @@ try {
 }
 try {
     if (usePhoto) {
-        const photoReqXML = new DOMParser().parseFromString(await photoReqResp.text(), 'application/xml');
+        photoReqXML = new DOMParser().parseFromString(await photoReqResp.text(), 'application/xml');
         const photoData = photoReqXML?.querySelector('return')?.textContent;
         if (!photoData) throw 0
         const photo = document.querySelector('.npc-image');
@@ -217,3 +216,10 @@ for (let item of document.querySelectorAll('.nlc-item')) {
         window.location.href = item.getAttribute('href');
     });
 }
+
+const studentDataVOs = dataReqXML.querySelector('studentDataVOs');
+const studentFirstName = studentDataVOs.querySelector('student firstName');
+const studentLastName = studentDataVOs.querySelector('student lastName');
+const studentGradeLevel = studentDataVOs.querySelector('student gradeLevel');
+document.querySelector('#welcome-message').innerHTML = 'Welcome' + studentFirstName ? ', ' + studentFirstName + '!' : '!';
+document.querySelector('#welcome-subtitle').innerHTML = 'Grade ' + studentGradeLevel;
