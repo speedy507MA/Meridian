@@ -171,7 +171,7 @@ try {
     })(soapSchema.structXML(false)), rootUrl, { 'headers': { 'Accept-Encoding': 'gzip, deflate, br' }, 'method': 'POST' }, 'urn:getStudentData', true, true);
 } catch (e) {
     sendError('Request Error', 'There was a problem requesting your grades from PowerSchool.\nError Details (if any): ' + e.message, 'Refresh', window.location.reload);
-    return;
+    throw e;
 }
 
 document.getElementById('process-notif').style.display = 'none';

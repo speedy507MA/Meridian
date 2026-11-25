@@ -27,6 +27,14 @@ function eraseCookie(name) {
     document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
+if (getCookie('studentId')) {
+    document.querySelector('#process-notif .sh1').innerHTML = 'Attempting to Log You In'
+    document.getElementById('process-notif').style.display = 'block';
+    window.location.href = '/home.html';
+    window.location.replace(window.location.origin + '/home.html');
+    throw new Error('Halted execution to allow new window to load.');
+}
+
 const md5 = globalThis.md5;
 const rootUrl = 'https://md-api.bqbo.workers.dev/pearson-rest/services/PublicPortalService';
 const rootUrlJSON = 'https://md-api.bqbo.workers.dev/pearson-rest/services/PublicPortalService?response=application/json';
@@ -245,7 +253,6 @@ loginForm.addEventListener('submit', async (e) => {
         return;
     } catch (err) {
         sendErrorBox(null, loginXMLResponse ? 'The login request failed. Code: ' + loginXMLResponse.status + ' (' + loginXMLResponse.statusText + ').' : 'The login request failed.', 'Critical Error', 'There was an issue logging into PowerSchool and the error failed to display.');
-        throw err;
-        //return;
+        return;
     }
 });

@@ -1,7 +1,7 @@
 :root {
     --submit-color: light-dark(#75D4D0, #245B72);
     --meridian-text-background: light-dark(linear-gradient(90deg, rgb(34, 95, 123) 0%, rgb(30, 98, 117) 25%, rgba(35, 109, 120, 1) 50%, rgba(57, 127, 145, 1) 75%, rgba(36, 91, 114, 1) 100%), linear-gradient(90deg, rgba(217, 244, 238, 1) 0%, rgba(168, 229, 221, 1) 25%, rgba(117, 212, 208, 1) 50%, rgba(164, 223, 240, 1) 75%, rgba(213, 240, 250, 1) 100%));
-    --meridian-text-background-fallback: light-dark(#D9F4EE, #102D3A);
+    --meridian-text-background-fallback: light-dark(#102D3A, #D9F4EE);
 }
 
 @keyframes spin {
