@@ -188,24 +188,16 @@
 .gb-item {
     border: 1px solid gray;
     border-radius: 1em;
-    width: calc((100% - 2vw) / var(--course-count));
     padding: 1vw;
-}
-
-.gbi-top {
     display: flex;
+    width: calc(100% - 2vw);
 }
 
-.gbi-top-left {
-    width: 70%;
-    text-align: left;
+.gbi-left {
+    width: 80%;
+    display: block;
 }
 
-.gbi-top-middle {
-    width: 10%;
-}
-
-.gbi-top-right {
+.gbi-right {
     width: 20%;
-    text-align: right;
 }
