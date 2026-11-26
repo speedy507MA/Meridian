@@ -15,20 +15,7 @@ body {
     color: var(--body-text_color);
 }
 
-p,
-span,
-a,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-li,
-blockquote,
-label,
-td,
-th {
+body {
     font-family: 'Noto', sans-serif;
 }
 
@@ -108,7 +95,8 @@ p,
 }
 
 h6,
-.h6 {
+.h6,
+small {
     font-size: 0.875rem;
 }
 

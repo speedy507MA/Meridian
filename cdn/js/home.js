@@ -231,5 +231,114 @@ const studentLastName = studentDataVOs.querySelector('student lastName').textCon
 const studentGradeLevel = studentDataVOs.querySelector('student gradeLevel').textContent;
 document.querySelector('#welcome-message').innerHTML = studentFirstName + ' ' + studentLastName + ', Grade ' + studentGradeLevel;
 
-const termsVO = [...dataReqXML.querySelectorAll('terms')];
-document.querySelector('#welcome-date').innerHTML = termsVO.find(t => t.querySelector('parentTermId').textContent == '0').querySelector('title').textContent;
+const terms = [...dataReqXML.querySelectorAll('terms')];
+const sections = [...dataReqXML.querySelectorAll('sections')];
+const periods = [...dataReqXML.querySelectorAll('periods')];
+const finalGrades = [...dataReqXML.querySelectorAll('finalGrades')];
+const reportingTerms = [...dataReqXML.querySelectorAll('reportingTerms')];
+const attendanceCodes = [...dataReqXML.querySelectorAll('attendanceCodes')];
+const attendance = [...dataReqXML.querySelectorAll('attendance')];
+const teachers = [...dataReqXML.querySelectorAll('teachers')];
+
+document.querySelector('#welcome-date').innerHTML = terms.find(t => t.querySelector('parentTermId').textContent == '0').querySelector('title').textContent;
+
+document.documentElement.style.setProperty('--course-count', dataReqXML.querySelectorAll('sections').length);
+
+for (const section of sections) {
+    const sectionName = section.querySelector('schoolCourseTitle').textContent;
+    const sectionCode = section.querySelector('courseCode').textContent;
+    const sectionRoom = section.querySelector('roomName').textContent;
+    const sectionPeriod = periods.find(p => p.querySelector('sortOrder').textContent == section.querySelector('periodSort').textContent);
+    const sectionPeriodName = parseInt(sectionPeriod.querySelector('name').textContent);
+    const sectionTerm = terms.find(t => t.querySelector('id').textContent == section.querySelector('termID').textContent);
+    const sectionMaxReportingTerm = reportingTerms.find(t => new Date(t.querySelector('startDate').textContent) - new Date(t.querySelector('endDate').textContent) == new Date(sectionTerm.querySelector('startDate').textContent) - new Date(sectionTerm.querySelector('endDate').textContent));
+    const sectionFinalGrade = finalGrades.find(g => g.querySelector('reportingTermId').textContent == sectionMaxReportingTerm.querySelector('id').textContent && g.querySelector('sectionid').textContent == section.querySelector('id').textContent);
+    const sectionFinalGradeLetter = sectionFinalGrade.querySelector('grade').textContent;
+    const sectionFinalGradePercentage = Math.round(parseFloat(sectionFinalGrade.querySelector('percent').textContent));
+    const sectionAbsentCount = attendance.filter(a => {
+        const code = a.querySelector('attCodeid').textContent;
+        let aCode = attendanceCodes.filter(c => {
+            const aCode = c.querySelector('attCode').textContent;
+            return aCode == 'AE' || aCode == 'A' || aCode == 'AU' || aCode == 'TA';
+        });
+        aCode = aCode.map(c => c.querySelector('attCodeid').textContent);
+        let found = false;
+        for (const fCode of aCode) {
+            found = fCode == code;
+        }
+        return found;
+    }).length;
+    const sectionTardyCount = attendance.filter(a => {
+        const code = a.querySelector('attCodeid').textContent;
+        let aCode = attendanceCodes.filter(c => {
+            const aCode = c.querySelector('attCode').textContent;
+            return aCode == 'TX' || aCode == 'TU';
+        });
+        aCode = aCode.map(c => c.querySelector('attCodeid').textContent);
+        let found = false;
+        for (const fCode of aCode) {
+            found = fCode == code;
+        }
+        return found;
+    }).length;
+    const sectionTeacher = teachers.find(t => t.querySelector('id').textContent == section.querySelector('teacherID').textContent);
+    const sectionTeacherId = parseInt(sectionTeacher.querySelector('id').textContent);
+    const sectionTeacherFirstName = sectionTeacher.querySelector('firstName');
+    const sectionTeacherLastName = sectionTeacher.querySelector('lastName');
+
+    const gbItem = document.createElement('div');
+    gbItem.className = 'gb-item';
+    const gbiTop = document.createElement('div');
+    gbiTop.className = 'gbi-top';
+    const gbiTopLeft = document.createElement('div');
+    gbiTopLeft.className = 'gbi-top-left';
+    const gbiPeriod = document.createElement('small');
+    gbiPeriod.className = 'gbi-period';
+    gbiPeriod.innerHTML = sectionPeriodName;
+    gbiTopLeft.appendChild(gbiPeriod);
+    const gbiCourseCode = document.createElement('small');
+    gbiCourseCode.className = 'gbi-courseCode';
+    gbiCourseCode.innerHTML = sectionCode;
+    gbiTopLeft.appendChild(gbiCourseCode);
+    const gbiCourseName = document.createElement('h4');
+    gbiCourseName.innerHTML = sectionName;
+    gbiTopLeft.appendChild(gbiCourseName);
+    const gbiExtraInfo = document.createElement('small');
+    const gbiRoomNumber = document.createElement('span');
+    gbiRoomNumber.innerHTML = sectionRoom;
+    gbiExtraInfo.appendChild(gbiRoomNumber);
+    const gbiTeacher = document.createElement('a');
+    gbiTeacher.innerHTML = sectionTeacherFirstName + ' ' + sectionTeacherLastName;
+    gbiExtraInfo.appendChild(gbiTeacher);
+    gbiTopLeft.appendChild(gbiExtraInfo);
+    gbiTop.appendChild(gbiTopLeft);
+    const gbiTopMiddle = document.createElement('div');
+    gbiTopMiddle.className = 'gbi-top-middle';
+    gbiTop.appendChild(gbiTopMiddle);
+    const gbiTopRight = document.createElement('div');
+    gbiTopRight.className = 'gbi-top-right';
+    const gbiLetterGrade = document.createElement('h4');
+    gbiLetterGrade.innerHTML = sectionFinalGradeLetter;
+    gbiTopRight.appendChild(gbiLetterGrade);
+    const gbiPercentageGrade = document.createElement('small');
+    gbiPercentageGrade.innerHTML = sectionFinalGradePercentage;
+    gbiTopRight.appendChild(gbiPercentageGrade);
+    gbiTop.appendChild(gbiTopRight);
+    gbItem.appendChild(gbiTop);
+    const gbiBottom = document.createElement('div');
+    gbiBottom.className = 'gbi-bottom';
+    const gbiAttendance = document.createElement('p');
+    const gbiAbsences = document.createElement('span');
+    gbiAbsences.className = 'gbi-absences';
+    gbiAbsences.innerHTML = sectionAbsentCount;
+    gbiAttendance.appendChild(gbiAbsences);
+    gbiAttendance.innerHTML += ' absences, ';
+    const gbiTardies = document.createElement('span');
+    gbiTardies.className = 'gbi-tardies';
+    gbiTardies.innerHTML = sectionTardyCount;
+    gbiAttendance.appendChild(gbiTardies);
+    gbiAttendance.innerHTML += ' tardies';
+    gbiBottom.appendChild(gbiAttendance);
+    gbItem.appendChild(gbiBottom);
+    document.querySelector('.gradebook-container').appendChild(gbItem);
+}
