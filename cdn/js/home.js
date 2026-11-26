@@ -231,14 +231,14 @@ const studentLastName = studentDataVOs.querySelector('student lastName').textCon
 const studentGradeLevel = studentDataVOs.querySelector('student gradeLevel').textContent;
 document.querySelector('#welcome-message').innerHTML = studentFirstName + ' ' + studentLastName + ', Grade ' + studentGradeLevel;
 
-const terms = [...dataReqXML.querySelectorAll('terms')];
-const sections = [...dataReqXML.querySelectorAll('sections')];
-const periods = [...dataReqXML.querySelectorAll('periods')];
-const finalGrades = [...dataReqXML.querySelectorAll('finalGrades')];
-const reportingTerms = [...dataReqXML.querySelectorAll('reportingTerms')];
-const attendanceCodes = [...dataReqXML.querySelectorAll('attendanceCodes')];
-const attendance = [...dataReqXML.querySelectorAll('attendance')];
-const teachers = [...dataReqXML.querySelectorAll('teachers')];
+const terms = [...dataReqXML.querySelectorAll('studentDataVOs > terms')];
+const sections = [...dataReqXML.querySelectorAll('studentDataVOs > sections')];
+const periods = [...dataReqXML.querySelectorAll('studentDataVOs > periods')];
+const finalGrades = [...dataReqXML.querySelectorAll('studentDataVOs > finalGrades')];
+const reportingTerms = [...dataReqXML.querySelectorAll('studentDataVOs > reportingTerms')];
+const attendanceCodes = [...dataReqXML.querySelectorAll('studentDataVOs > attendanceCodes')];
+const attendance = [...dataReqXML.querySelectorAll('studentDataVOs > attendance')];
+const teachers = [...dataReqXML.querySelectorAll('studentDataVOs > teachers')];
 
 document.querySelector('#welcome-date').innerHTML = terms.find(t => t.querySelector('parentTermId').textContent == '0').querySelector('title').textContent;
 
