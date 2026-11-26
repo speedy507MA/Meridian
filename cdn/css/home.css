@@ -201,6 +201,6 @@
 .gbi-right {
     width: 20%;
     display: flex;
-    align-content: center;
-    justify-content: center;
+    align-items: center;
+    justify-items: center;
 }

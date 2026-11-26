@@ -343,14 +343,16 @@ for (const section of sections) {
     gbiLeftBottom.appendChild(gbiAttendance);
     gbiLeft.appendChild(gbiLeftBottom);
     gbItem.appendChild(gbiLeft);
+    const gbiRightContainer = document.createElement('div');
+    gbiRightContainer.className = 'gbi-right'
     const gbiRight = document.createElement('div');
-    gbiRight.className = 'gbi-right'
     const gbiLetterGrade = document.createElement('h3');
     gbiLetterGrade.innerHTML = sectionFinalGradeLetter;
     gbiRight.appendChild(gbiLetterGrade);
     const gbiPercentGrade = document.createElement('small');
     gbiPercentGrade.innerHTML = sectionFinalGradePercentage + '%';
     gbiRight.appendChild(gbiPercentGrade);
-    gbItem.appendChild(gbiRight);
+    gbiRightContainer.appendChild(gbiRight);
+    gbItem.appendChild(gbiRightContainer);
     document.querySelector('.gradebook-container').appendChild(gbItem);
 }
