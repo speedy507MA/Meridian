@@ -6,6 +6,15 @@
     --dark-light: light-dark(#000, #FFF);
 }
 
+@view-transition {
+    navigation: auto;
+}
+
+body {
+    background-color: var(--body-background_color);
+    color: var(--body-text_color);
+}
+
 p,
 span,
 a,
