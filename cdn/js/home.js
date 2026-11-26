@@ -247,8 +247,6 @@ sections.sort((a, b) => {
     const periodNumberA = parseInt(periodA.querySelector('name').textContent);
     const periodNumberB = parseInt(periodB.querySelector('name').textContent);
 
-    console.log(a, b, periodA, periodB, periodNumberA, periodNumberB);
-
     return periodNumberA - periodNumberB
 });
 
