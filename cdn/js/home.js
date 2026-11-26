@@ -270,6 +270,7 @@ for (const section of sections) {
         const gsId = g.querySelector('sectionid').textContent;
         for (const sectionMaxReportingTerm of sectionMaxReportingTerms) {
             const reportingId = sectionMaxReportingTerm.querySelector('id').textContent;
+            console.log(sectionId, gsId, reportingId, grId);
             if ((reportingId == grId) && (sectionId == gsId)) return true;
         }
         return false;
@@ -299,7 +300,7 @@ for (const section of sections) {
             const aCode = c.querySelector('attCode').textContent;
             return aCode == 'TX' || aCode == 'TU';
         });
-        aCode = aCode.map(c => c.querySelector('attCodeid').textContent);
+        aCode = aCode.map(c => c.querySelector('attCode')?.textContent);
         let found = false;
         for (const fCode of aCode) {
             found = fCode == code;
