@@ -279,15 +279,16 @@ for (const section of sections) {
         }
         return false;
     });
-    if (!sectionFinalGrade) continue;
-    const sectionFinalGradeLetter = sectionFinalGrade.querySelector('grade').textContent;
-    const sectionFinalGradePercentage = Math.round(parseFloat(sectionFinalGrade.querySelector('percent').textContent));
+    const sectionFinalGradeLetter = sectionFinalGrade?.querySelector('grade')?.textContent || '__';
+    const sectionFinalGradePercentage = Math.round(parseFloat(sectionFinalGrade?.querySelector('percent')?.textContent)) || '';
     const sectionAbsentCount = attendance.filter(a => {
         const code = a.querySelector('attCodeid').textContent;
         let aCode = attendanceCodes.filter(c => {
             const aCode = c.querySelector('attCode').textContent;
             return aCode == 'AE' || aCode == 'A' || aCode == 'AU' || aCode == 'TA';
         });
+        console.log(code);
+        console.log(aCode);
         aCode = aCode.map(c => c.querySelector('attCode')?.textContent);
         let found = false;
         for (const fCode of aCode) {
