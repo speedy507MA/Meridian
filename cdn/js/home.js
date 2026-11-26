@@ -276,20 +276,23 @@ for (const section of sections) {
     });
     console.log(sectionFinalGrade);
     const sectionFinalGradeLetter = sectionFinalGrade.querySelector('grade').textContent;
+    console.log(sectionFinalGradeLetter);
     const sectionFinalGradePercentage = Math.round(parseFloat(sectionFinalGrade.querySelector('percent').textContent));
+    console.log(sectionFinalGradePercentage);
     const sectionAbsentCount = attendance.filter(a => {
         const code = a.querySelector('attCodeid').textContent;
         let aCode = attendanceCodes.filter(c => {
             const aCode = c.querySelector('attCode').textContent;
             return aCode == 'AE' || aCode == 'A' || aCode == 'AU' || aCode == 'TA';
         });
-        aCode = aCode.map(c => c.querySelector('attCodeid').textContent);
+        aCode = aCode.map(c => c.querySelector('attCode')?.textContent);
         let found = false;
         for (const fCode of aCode) {
             found = fCode == code;
         }
         return found;
     }).length;
+    console.log(sectionAbsentCount);
     const sectionTardyCount = attendance.filter(a => {
         const code = a.querySelector('attCodeid').textContent;
         let aCode = attendanceCodes.filter(c => {
@@ -303,10 +306,14 @@ for (const section of sections) {
         }
         return found;
     }).length;
+    console.log(sectionTardyCount);
     const sectionTeacher = teachers.find(t => t.querySelector('id').textContent == section.querySelector('teacherID').textContent);
+    console.log(sectionTeacher);
     const sectionTeacherId = parseInt(sectionTeacher.querySelector('id').textContent);
     const sectionTeacherFirstName = sectionTeacher.querySelector('firstName');
+    console.log(sectionTeacherFirstName);
     const sectionTeacherLastName = sectionTeacher.querySelector('lastName');
+    console.log(sectionTeacherLastName);
 
     const gbItem = document.createElement('div');
     gbItem.className = 'gb-item';
