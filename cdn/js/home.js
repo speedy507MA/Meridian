@@ -319,12 +319,12 @@ for (const section of sections) {
     gbiName.innerHTML = sectionName;
     gbiLeftTop.appendChild(gbiName);
     const gbiExtra = document.createElement('small');
-    const gbiRoom = document.createElement('span');
-    gbiRoom.innerHTML = sectionRoom + ' ';
-    gbiExtra.appendChild(gbiRoom);
     const gbiTeacher = document.createElement('a');
-    gbiTeacher.innerHTML = sectionTeacherFirstName + ' ' + sectionTeacherLastName;
+    gbiTeacher.innerHTML = sectionTeacherFirstName + ' ' + sectionTeacherLastName + ', ';
     gbiExtra.appendChild(gbiTeacher);
+    const gbiRoom = document.createElement('span');
+    gbiRoom.innerHTML = 'Room ' + sectionRoom;
+    gbiExtra.appendChild(gbiRoom);
     gbiLeftTop.appendChild(gbiExtra);
     gbiLeft.appendChild(gbiLeftTop);
     const gbiLeftBottom = document.createElement('div');
@@ -344,7 +344,7 @@ for (const section of sections) {
     gbiLeft.appendChild(gbiLeftBottom);
     gbItem.appendChild(gbiLeft);
     const gbiRight = document.createElement('div');
-    const gbiLetterGrade = document.createElement('h4');
+    const gbiLetterGrade = document.createElement('h3');
     gbiLetterGrade.innerHTML = sectionFinalGradeLetter;
     gbiRight.appendChild(gbiLetterGrade);
     const gbiPercentGrade = document.createElement('small');
