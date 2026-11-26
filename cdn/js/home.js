@@ -241,7 +241,7 @@ const attendance = [...dataReqXML.querySelectorAll('studentDataVOs > attendance'
 const teachers = [...dataReqXML.querySelectorAll('studentDataVOs > teachers')];
 
 sections.sort((a, b) => {
-    periods.find(p => p.querySelector('sortOrder').textContent == a.querySelector('periodSort').textContent) - periods.find(p => p.querySelector('sortOrder').textContent == b.querySelector('periodSort').textContent);;
+    parseInt(periods.find(p => p.querySelector('sortOrder').textContent == a.querySelector('periodSort').textContent).querySelector('name').textContent) - parseInt(periods.find(p => p.querySelector('sortOrder').textContent == b.querySelector('periodSort').textContent).querySelector('name').textContent);
 });
 
 document.querySelector('#welcome-date').innerHTML = terms.find(t => t.querySelector('parentTermId').textContent == '0').querySelector('title').textContent;
