@@ -346,7 +346,7 @@ for (const section of sections) {
     const gbiRightContainer = document.createElement('div');
     gbiRightContainer.className = 'gbi-right'
     const gbiRight = document.createElement('div');
-    const gbiLetterGrade = document.createElement('h3');
+    const gbiLetterGrade = document.createElement('h1');
     gbiLetterGrade.innerHTML = sectionFinalGradeLetter;
     gbiRight.appendChild(gbiLetterGrade);
     const gbiPercentGrade = document.createElement('small');
