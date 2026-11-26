@@ -344,6 +344,7 @@ for (const section of sections) {
     gbiLeft.appendChild(gbiLeftBottom);
     gbItem.appendChild(gbiLeft);
     const gbiRight = document.createElement('div');
+    gbiRight.className = 'gbi-right'
     const gbiLetterGrade = document.createElement('h3');
     gbiLetterGrade.innerHTML = sectionFinalGradeLetter;
     gbiRight.appendChild(gbiLetterGrade);
