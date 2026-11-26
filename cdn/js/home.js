@@ -241,7 +241,15 @@ const attendance = [...dataReqXML.querySelectorAll('studentDataVOs > attendance'
 const teachers = [...dataReqXML.querySelectorAll('studentDataVOs > teachers')];
 
 sections.sort((a, b) => {
-    parseInt(periods.find(p => p.querySelector('sortOrder').textContent == a.querySelector('periodSort').textContent).querySelector('name').textContent) - parseInt(periods.find(p => p.querySelector('sortOrder').textContent == b.querySelector('periodSort').textContent).querySelector('name').textContent);
+    const periodA = periods.find(p => p.querySelector('sortOrder').textContent == a.querySelector('periodSort').textContent);
+    const periodB = periods.find(p => p.querySelector('sortOrder').textContent == b.querySelector('periodSort').textContent);
+
+    const periodNumberA = parseInt(periodA.querySelector('name').textContent);
+    const periodNumberB = parseInt(periodB.querySelector('name').textContent);
+
+    console.log(a, b, periodA, periodB, periodNumberA, periodNumberB);
+
+    return periodNumberA - periodNumberB
 });
 
 document.querySelector('#welcome-date').innerHTML = terms.find(t => t.querySelector('parentTermId').textContent == '0').querySelector('title').textContent;
