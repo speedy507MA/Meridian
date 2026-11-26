@@ -251,7 +251,7 @@ for (const section of sections) {
     const sectionPeriod = periods.find(p => p.querySelector('sortOrder').textContent == section.querySelector('periodSort').textContent);
     const sectionPeriodName = parseInt(sectionPeriod.querySelector('name').textContent);
     const sectionTerm = terms.find(t => t.querySelector('id').textContent == section.querySelector('termID').textContent);
-    const sectionMaxReportingTerm = reportingTerms.find(t => (new Date(t.querySelector('startDate').textContent) - new Date(t.querySelector('endDate').textContent)) == (new Date(sectionTerm.querySelector('startDate').textContent) - new Date(sectionTerm.querySelector('endDate').textContent)));
+    const sectionMaxReportingTerm = reportingTerms.find(t => Math.abs(new Date(t.querySelector('endDate').textContent) - new Date(t.querySelector('startDate').textContent) - new Date(sectionTerm.querySelector('endDate').textContent) + new Date(sectionTerm.querySelector('startDate').textContent)) <= 432000000);
     console.log(sectionMaxReportingTerm);
 
     const sectionFinalGrade = finalGrades.find(g => g.querySelector('reportingTermId').textContent == sectionMaxReportingTerm.querySelector('id').textContent && g.querySelector('sectionid').textContent == section.querySelector('id').textContent);
