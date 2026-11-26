@@ -265,7 +265,14 @@ for (const section of sections) {
     });
     console.log(sectionMaxReportingTerm);
 
-    const sectionFinalGrade = finalGrades.find(g => g.querySelector('reportingTermId').textContent == sectionMaxReportingTerm.querySelector('id').textContent && g.querySelector('sectionid').textContent == section.querySelector('id').textContent);
+    const sectionFinalGrade = finalGrades.find(g => {
+        const reportingId = sectionMaxReportingTerm.querySelector('id').textContent;
+        const sectionId = section.querySelector('id').textContent;
+        const grId = g.querySelector('reportingTermId').textContent;
+        const gsId = g.querySelector('sectionid').textContent;
+
+        return (reportingId == grId) && (sectionId == gsId);
+    });
     console.log(sectionFinalGrade);
     const sectionFinalGradeLetter = sectionFinalGrade.querySelector('grade').textContent;
     const sectionFinalGradePercentage = Math.round(parseFloat(sectionFinalGrade.querySelector('percent').textContent));
