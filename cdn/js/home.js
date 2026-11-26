@@ -270,6 +270,7 @@ for (const section of sections) {
         const sectionId = section.querySelector(':scope > id').textContent;
         const grId = g.querySelector('reportingTermId').textContent;
         const gsId = g.querySelector('sectionid').textContent;
+        console.log(reportingId, grId, sectionId, gsId);
         return (reportingId == grId) && (sectionId == gsId);
     });
     console.log(sectionFinalGrade);
