@@ -256,10 +256,12 @@ document.documentElement.style.setProperty('--course-count', dataReqXML.querySel
 
 for (const section of sections) {
     const sectionName = section.querySelector('schoolCourseTitle').textContent;
+    const sectionId = section.querySelector(':scope > id').textContent;
     const sectionCode = section.querySelector('courseCode').textContent;
     const sectionRoom = section.querySelector('roomName').textContent;
     const sectionPeriod = periods.find(p => p.querySelector('sortOrder').textContent == section.querySelector('periodSort').textContent);
     const sectionPeriodName = parseInt(sectionPeriod.querySelector('name').textContent);
+    const sectionPeriodId = parseInt(sectionPeriod.querySelector('id').textContent);
     const sectionTerm = terms.find(t => t.querySelector('id').textContent == section.querySelector('termID').textContent);
     const sectionMaxReportingTerms = reportingTerms.filter(t => {
         const rEnd = new Date(t.querySelector('endDate').textContent);
@@ -270,7 +272,6 @@ for (const section of sections) {
     });
 
     const sectionFinalGrade = finalGrades.find(g => {
-        const sectionId = section.querySelector(':scope > id').textContent;
         const grId = g.querySelector('reportingTermId').textContent;
         const gsId = g.querySelector('sectionid').textContent;
         for (const sectionMaxReportingTerm of sectionMaxReportingTerms) {
@@ -293,7 +294,7 @@ for (const section of sections) {
             found = (fCode == code);
             if (found) break;
         }
-        return found;
+        return found && a.querySelector('periodid').textContent == sectionPeriodId;
     }).length;
     const sectionTardyCount = attendance.filter(a => {
         const code = a.querySelector('attCodeid').textContent;
@@ -307,7 +308,7 @@ for (const section of sections) {
             found = (fCode == code);
             if (found) break;
         }
-        return found;
+        return found && a.querySelector('periodid').textContent == sectionPeriodId;
     }).length;
     const sectionTeacher = teachers.find(t => t.querySelector('id').textContent == section.querySelector('teacherID').textContent);
     const sectionTeacherId = parseInt(sectionTeacher.querySelector('id').textContent);
