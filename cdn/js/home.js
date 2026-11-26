@@ -287,10 +287,10 @@ for (const section of sections) {
             const aCode = c.querySelector('attCode').textContent;
             return aCode == 'AE' || aCode == 'A' || aCode == 'AU' || aCode == 'TA';
         });
-        aCode = aCode.map(c => c.querySelector('attCode')?.textContent);
+        aCode = aCode.map(c => c.querySelector('id')?.textContent);
         let found = false;
         for (const fCode of aCode) {
-            found = fCode == code;
+            found = (fCode == code);
             if (found) break;
         }
         return found;
@@ -301,10 +301,10 @@ for (const section of sections) {
             const aCode = c.querySelector('attCode').textContent;
             return aCode == 'TX' || aCode == 'TU';
         });
-        aCode = aCode.map(c => c.querySelector('attCode')?.textContent);
+        aCode = aCode.map(c => c.querySelector('id')?.textContent);
         let found = false;
         for (const fCode of aCode) {
-            found = fCode == code;
+            found = (fCode == code);
             if (found) break;
         }
         return found;
