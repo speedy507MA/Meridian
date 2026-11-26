@@ -256,22 +256,23 @@ for (const section of sections) {
     console.log(sectionPeriodName);
     const sectionTerm = terms.find(t => t.querySelector('id').textContent == section.querySelector('termID').textContent);
     console.log(sectionTerm);
-    const sectionMaxReportingTerm = reportingTerms.find(t => {
+    const sectionMaxReportingTerms = reportingTerms.filter(t => {
         const rEnd = new Date(t.querySelector('endDate').textContent);
         const rStart = new Date(t.querySelector('startDate').textContent);
         const tEnd = new Date(sectionTerm.querySelector('endDate').textContent);
         const tStart = new Date(sectionTerm.querySelector('startDate').textContent);
         return Math.abs((rEnd - rStart) - (tEnd - tStart)) <= (5 * 24 * 60 * 60 * 1000);
     });
-    console.log(sectionMaxReportingTerm);
 
     const sectionFinalGrade = finalGrades.find(g => {
-        const reportingId = sectionMaxReportingTerm.querySelector('id').textContent;
         const sectionId = section.querySelector(':scope > id').textContent;
         const grId = g.querySelector('reportingTermId').textContent;
         const gsId = g.querySelector('sectionid').textContent;
-        console.log(reportingId, grId, sectionId, gsId);
-        return (reportingId == grId) && (sectionId == gsId);
+        for (const sectionMaxReportingTerm of sectionMaxReportingTerms) {
+            const reportingId = sectionMaxReportingTerm.querySelector('id').textContent;
+            if ((reportingId == grId) && (sectionId == gsId)) return true;
+        }
+        return false;
     });
     console.log(sectionFinalGrade);
     const sectionFinalGradeLetter = sectionFinalGrade.querySelector('grade').textContent;
