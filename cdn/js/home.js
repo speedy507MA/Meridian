@@ -240,6 +240,10 @@ const attendanceCodes = [...dataReqXML.querySelectorAll('studentDataVOs > attend
 const attendance = [...dataReqXML.querySelectorAll('studentDataVOs > attendance')];
 const teachers = [...dataReqXML.querySelectorAll('studentDataVOs > teachers')];
 
+sections.sort((a, b) => {
+    periods.find(p => p.querySelector('sortOrder').textContent == a.querySelector('periodSort').textContent) - periods.find(p => p.querySelector('sortOrder').textContent == b.querySelector('periodSort').textContent);;
+});
+
 document.querySelector('#welcome-date').innerHTML = terms.find(t => t.querySelector('parentTermId').textContent == '0').querySelector('title').textContent;
 
 document.documentElement.style.setProperty('--course-count', dataReqXML.querySelectorAll('sections').length);
