@@ -229,45 +229,7 @@ const studentDataVOs = dataReqXML.querySelector('studentDataVOs');
 const studentFirstName = studentDataVOs.querySelector('student firstName').textContent;
 const studentLastName = studentDataVOs.querySelector('student lastName').textContent;
 const studentGradeLevel = studentDataVOs.querySelector('student gradeLevel').textContent;
-document.querySelector('#welcome-message').innerHTML = 'Welcome' + (' ' + studentFirstName ? ', ' + studentFirstName + '!' : '!');
-document.querySelector('#welcome-subtitle').innerHTML = 'Grade ' + studentGradeLevel;
+document.querySelector('#welcome-message').innerHTML = studentFirstName + ' ' + studentLastName + ', Grade ' + studentGradeLevel;
 
 const termsVO = [...dataReqXML.querySelectorAll('terms')];
-const topLayerTerm = termsVO.find(t => t.querySelector('parentTermId').textContent == '0');
-const gbHeading = document.querySelector('tr.gh-row1');
-const gbBody = document.querySelector('tr.gb-course');
-
-function parseTerms(parentTerm, termList) {
-    const parentTermId = parentTerm.querySelector('id').textContent;
-    const filteredTermList = termList.filter(t => t.querySelector('parentTermId').textContent == parentTermId);
-    for (const term of filteredTermList) {
-        const termId = term.querySelector('id').textContent;
-        if (termList.some(t => t.querySelector('parentTermId').textContent == termId)) {
-            parseTerms(term, termList);
-        }
-        const termElem = document.createElement('th');
-        termElem.className = 'gh-item';
-        termElem.scope = 'col';
-        termElem.innerHTML = term.querySelector('abbrev').textContent;
-        gbHeading.appendChild(termElem);
-    }
-}
-
-parseTerms(topLayerTerm, termsVO);
-
-// sections/courses
-const sections = [...dataReqXML.querySelectorAll('sections')];
-sections.sort((a, b) => {
-    const vA = Number(a.querySelector('periodSort').textContent.trim());
-    const vB = Number(b.querySelector('periodSort').textContent.trim());
-    return vA - vB;
-});
-
-for (const section of sections) {
-    const secElem = document.createElement('tr');
-    secElem.className = 'gb-course';
-    const seName = document.createElement('td');
-    seName.innerHTML = section.querySelector('schoolCourseTitle').textContent;
-    secElem.appendChild(seName);
-    gbBody.appendChild(secElem);
-}
+document.querySelector('#welcome-date').innerHTML = termsVO.find(t => t.querySelector('parentTermId').textContent == '0').querySelector('title').textContent;
